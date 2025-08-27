@@ -1,0 +1,113 @@
+/* src/pages/MedicineListPage.css */
+
+.medicine-list-page {
+  padding: 20px;
+}
+
+.medicine-list-page h1 {
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+}
+
+.add-medicine-button {
+  margin-bottom: 12px;
+  padding: 8px 14px;
+  background-color: #1e50ad;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.add-medicine-button:hover {
+  background-color: #163b8b;
+}
+
+.medicine-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.medicine-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.medicine-image-wrapper {
+  width: 100%;
+  height: 160px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.medicine-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.medicine-no-image {
+  color: #888;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.medicine-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.medicine-name {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.medicine-category,
+.medicine-interval,
+.medicine-expires,
+.medicine-note {
+  margin: 4px 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.medicine-card {
+  position: relative; /* delete-button을 카드 상단 우측에 배치하기 위해 */
+}
+
+.delete-button {
+  position: absolute;
+  top: 8px;     /* 카드 내부 여백에 맞춰 위치 조정 */
+  right: 8px;   /* 카드 모서리에서 약간 안쪽으로 */
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 1.25rem;
+  line-height: 1;
+  text-align: center;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.delete-button:hover {
+  background: rgba(200, 0, 0, 0.8);
+}
+
+.delete-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(200, 0, 0, 0.5);
+}

@@ -1,38 +1,296 @@
+/* App.css */
+
 .App {
-  text-align: center;
+  display: flex;
+  height: 100vh; /* 화면 전체 높이 차지 */
+  overflow: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* ===== Sidebar 스타일 ===== */
+.sidebar {
+  width: 240px;
+  background-color: #ffffff;
+  border-right: 1px solid #e0e0e0;
   display: flex;
   flex-direction: column;
+}
+
+.sidebar .logo {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #27ae60; /* 예시: 녹색 로고 색 */
+}
+
+.sidebar nav {
+  margin-top: 20px;
+  flex-grow: 1;
+}
+
+.sidebar nav .menu-item {
+  padding: 15px 20px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.sidebar nav .menu-item:hover {
+  background-color: #f0f0f0;
+}
+
+.sidebar nav .menu-item.active {
+  background-color: #eafaf1;
+  color: #27ae60;
+  font-weight: bold;
+}
+
+/* “Others” 구분선 */
+.sidebar .divider {
+  margin: 20px 0 8px 20px;
+  font-size: 0.8rem;
+  color: #888;
+  text-transform: uppercase;
+}
+
+/* ===== Header 스타일 ===== */
+.header {
+  height: 60px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+}
+
+/* 검색창 */
+.header .search-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.header .search-container input {
+  width: 60%;
+  max-width: 500px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* 우측 프로필 버튼 */
+.header .profile-btn {
+  position: relative;
+  font-size: 1rem;
+  color: #555;
+}
+
+/* ===== 메인 콘텐츠 */
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content .dashboard-container {
+  padding: 20px 30px;
+  overflow-y: auto; /* 스크롤 가능 */
+}
+
+/* Dashboard 타이틀 */
+.dashboard-container h1 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+/* ===== “최근 인식된 고양이” 섹션 ===== */
+.recent-cats {
+  margin-bottom: 30px;
+}
+
+.recent-cats h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+/* CatCard를 3개씩 그리드로 배치 */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+/* 각 카드 */
+.cat-card {
+  width: 100%;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fafafa;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.cat-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* ===== 상단 오른쪽 원형 차트 위젯 ===== */
+.medicine-widget {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 차트 위젯 제목 행 */
+.medicine-widget .widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.medicine-widget .widget-header h3 {
+  font-size: 1rem;
+  color: #333;
+}
+
+.medicine-widget .widget-header button {
+  font-size: 0.9rem;
+  color: #27ae60;
+  background-color: #eafaf1;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+/* 차트 + 범례 */
+.medicine-widget .chart-area {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.medicine-widget .legend {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+}
+
+.medicine-widget .legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.medicine-widget .legend-color-box {
+  width: 12px;
+  height: 12px;
+  margin-right: 6px;
+  border-radius: 2px;
+}
+
+/* 파란색, 연두색, 보라색 예시로 설정 */
+.legend-color-box.pancaur { background-color: #3498db; }
+.legend-color-box.paracap { background-color: #2ecc71; }
+.legend-color-box.piline  { background-color: #9b59b6; }
+
+/* ===== 하단 좌측 “오늘 투약 대상인 고양이” ===== */
+.today-cats-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  flex: 1;
+  margin-right: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.today-cats-card h3 {
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.today-cats-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.today-cat-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.today-cat-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.today-cat-item .info {
+  display: flex;
+  flex-direction: column;
+}
+
+.today-cat-item .info .name {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.today-cat-item .info .last-date {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* ===== 하단 우측 “최근 투약량” ===== */
+.recent-dosage-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.recent-dosage-card h3 {
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.recent-dosage-card .stats {
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+
+.recent-dosage-card .stats .highlight {
+  font-weight: bold;
+  color: #27ae60;
+}
+
+.recent-dosage-card .chart-area {
+  flex: 1;
+}
+
+/* View Report 버튼(하단) */
+.view-report-btn {
+  margin-top: auto; /* 공간을 밀어내서 가장 아래에 위치 */
+  align-self: flex-end;
+  padding: 6px 12px;
+  background-color: #27ae60;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.9rem;
 }

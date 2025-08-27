@@ -1,0 +1,146 @@
+.cat-list-page {
+  padding: 20px;
+}
+
+.cat-list-page h1 {
+  font-size: 1.8rem;
+  margin-bottom: 16px;
+}
+
+.add-cat-button {
+  margin-bottom: 12px;
+  padding: 8px 14px;
+  background-color: #1e50ad;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.add-cat-button:hover {
+  background-color: #163b8b;
+}
+
+.cat-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.cat-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;  /* 내용 위쪽부터 */
+  position: relative;
+  height: 300px; /* 카드 높이 고정 */
+}
+
+
+.cat-image-wrapper {
+  width: 100%;
+  height: 150px;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.cat-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cat-no-image {
+  color: #888;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.cat-info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.cat-id {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #222;
+  margin-bottom: 4px;
+}
+
+.cat-save-at {
+  margin: 4px 0 12px 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.detail-button {
+  margin-top: auto;
+  padding: 8px 12px;
+  background-color: #1e50ad;
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  font-size: 1rem;
+  transition: background-color 0.1s ease-in-out;
+  cursor: pointer;
+}
+
+.detail-button:hover {
+  background-color: #163b8b;
+}
+
+.detail-button {
+  margin-top: auto; /* 핵심! 나머지 내용 위로 밀고 아래 고정 */
+  padding: 8px 12px;
+  background-color: #1e50ad;
+  color: #fff;
+  border-radius: 4px;
+  border: none;
+  font-size: 1rem;
+  transition: background-color 0.1s ease-in-out;
+  cursor: pointer;
+}
+
+
+.delete-button:hover {
+  background: rgba(200, 0, 0, 0.8);
+}
+
+.delete-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(200, 0, 0, 0.5);
+}
+
+.pagination {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.pagination button.active {
+  background-color: #1e50ad;
+  color: white;
+  font-weight: bold;
+}

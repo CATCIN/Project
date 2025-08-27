@@ -1,0 +1,66 @@
+/* src/pages/ScheduleFormPage.css */
+
+.schedule-form-page {
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.schedule-form-page h1 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.schedule-form .form-group {
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.schedule-form label {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.schedule-form input,
+.schedule-form select {
+  padding: 8px 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.error-text {
+  color: red;
+  margin-bottom: 12px;
+}
+
+.submit-button,
+.cancel-button {
+  padding: 10px 16px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.submit-button {
+  background-color: #27ae60;
+  color: white;
+}
+
+.submit-button:disabled {
+  background-color: #a4d0a0;
+  cursor: not-allowed;
+}
+
+.cancel-button {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.cancel-button:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}

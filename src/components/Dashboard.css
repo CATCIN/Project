@@ -1,0 +1,42 @@
+/* src/components/Dashboard.css */
+
+/* dashboard 전체 레이아웃 */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+}
+
+/* 상단 영역: 두 개의 위젯을 좌우로 배치 */
+.dashboard-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+/* 왼쪽: 최근 인식된 고양이 섹션 */
+.recent-cats-wrapper {
+  flex: 1; /* 화면의 남는 공간을 전부 차지하되 */
+  margin-right: 20px; /* 오른쪽 차트와 간격 */
+}
+
+/* 오른쪽: Pie Chart 위젯 */
+.medicine-widget-wrapper {
+  width: 340px; /* 고정 너비 */
+}
+
+/* 하단 영역: 두 개 패널(25%:75% 혹은 50%:50%) */
+.dashboard-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* 왼쪽: 오늘 투약 대상 고양이 */
+.today-cats-wrapper {
+  flex: 1;
+  margin-right: 20px;
+}
+
+/* 오른쪽: 최근 투약량 */
+.recent-dosage-wrapper {
+  flex: 1;
+}
