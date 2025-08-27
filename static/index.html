@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CatSin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #f8fafc;
+      color: #1f2937;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0;
+      width: 220px;
+      height: 100vh;
+      background: #f1f5f9;
+      padding: 20px;
+    }
+    .sidebar h2 {
+      margin-bottom: 30px;
+    }
+    .sidebar nav p {
+      margin: 14px 0;
+      color: #4b5563;
+      font-weight: 500;
+    }
+    .main {
+      margin-left: 240px;
+      padding: 20px 40px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .topbar input {
+      width: 300px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #e5e7eb;
+    }
+    .section {
+      margin-bottom: 24px;
+    }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .cat-grid img {
+      width: 100%;
+      border-radius: 8px;
+      height: 160px;
+      object-fit: cover;
+    }
+    .flex-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .card {
+      background: white;
+      padding: 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .cat-list img {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      margin-right: 12px;
+    }
+    .cat-item {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 10px 0;
+    }
+    .chart-placeholder {
+      height: 220px;
+      background: linear-gradient(135deg, #dbeafe, #93c5fd);
+      border-radius: 8px;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>🐾 CatSin</h2>
+    <nav>
+      <p><strong>Main</strong></p>
+      <p>🐱 Cat List</p>
+      <p>💊 Medicine List</p>
+      <p>📅 Schedule</p>
+      <br />
+      <p>⚙️ Settings</p>
+      <p>❓ Help</p>
+    </nav>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <h1>Dashboard</h1>
+      <input type="text" placeholder="Search..." />
+    </div>
+
+    <div class="section">
+      <h2>최근 인식된 고양이</h2>
+      <div class="cat-grid">
+        <img src="/cats/1.jpg" />
+        <img src="/cats/2.jpg" />
+        <img src="/cats/3.jpg" />
+        <img src="/cats/4.jpg" />
+        <img src="/cats/5.jpg" />
+        <img src="/cats/6.jpg" />
+      </div>
+    </div>
+
+    <div class="section flex-between">
+      <div class="card" style="width: 48%;">
+        <h3>오늘 투약 대상인 고양이</h3>
+        <div class="cat-list">
+          <div class="cat-item">
+            <img src="/cats/catA.jpg" />
+            <div>catA - 마지막 투약: 25.05.14</div>
+          </div>
+          <div class="cat-item">
+            <img src="/cats/catB.jpg" />
+            <div>catB - 마지막 투약: 25.05.14</div>
+          </div>
+          <div class="cat-item">
+            <img src="/cats/catC.jpg" />
+            <div>catC - 마지막 투약: 25.05.14</div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="width: 48%;">
+        <h3>주요 투약 약물</h3>
+        <div class="chart-placeholder">[원형 차트 자리]</div>
+        <p style="margin-top: 8px; font-size: 14px; color: #6b7280;">from May 1 to 12, 2025</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="card">
+        <div class="flex-between">
+          <h3>최근 투약량 - 대총 정보량</h3>
+          <button>View Report</button>
+        </div>
+        <div class="chart-placeholder" style="margin-top: 16px;">[막대 차트 자리]</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
