@@ -17,6 +17,13 @@ class Cat(Model):
     feature_vector: List[float]
     source: Literal["user", "system"]
     save_at: datetime = Field(default_factory=datetime.utcnow)
+    
+    cat_code: Optional[str] = None         # 사람이 보기 쉬운 고양이 코드 (CAT_0001)
+    stats_seen: int = 1                    # 몇 번 인식됐는지 카운터
+    last_seen: datetime = Field(default_factory=datetime.utcnow)  # 마지막 본 시간
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
+    
     note: str = ""
 
 class Medicine(Model):

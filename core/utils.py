@@ -1,6 +1,7 @@
 # core/utils.py
 import os
 import uuid
+import numpy as np
 from fastapi import UploadFile
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,3 +26,12 @@ async def save_image(file: UploadFile) -> str:
 
     return f"/static/images/{new_filename}"
 
+def l2_normalize(v: np.ndarray) -> np.ndarray:
+    return v / (np.linalg.norm(v) + 1e-12)
+
+def l2_normalize_list(v: list[float]) -> list[float]:
+    a = np.asarray(v, dtype=np.float32)
+    return (a / (np.linalg.norm(a) + 1e-12)).tolist()
+
+def cosine(a: np.ndarray, b: np.ndarray) -> float:
+    return float(np.dot(a, b))
