@@ -13,7 +13,7 @@ class Category(str, Enum):
     anthelmintic = "구충제"
 
 class Cat(Model):
-    image_path: str
+    image_path: List[str]
     feature_vector: List[float]
     source: Literal["user", "system"]
     save_at: datetime = Field(default_factory=datetime.utcnow)
@@ -31,7 +31,7 @@ class Medicine(Model):
     category: Category
     interval: int
     expires_date: datetime
-    image_url: Optional[str] = Field(None)
+    image_url: Optional[str] = Field(None)  # s3에 올릴 수 있도록 추후 개선(중요X)
     note: str = ""
 
 class MediLog(Model):
@@ -48,7 +48,7 @@ class MediSchedule(Model):
     dose: int = Field(1)
     note: str = ""
     created_at: Optional[datetime] = Field(default_factory=datetime.utcnow)
-
+    cat: Optional[Cat] = Field(default=None)
     @property
     def next_due(self) -> datetime:
         base = self.created_at or datetime.utcnow()

@@ -21,3 +21,5 @@ motor
 boto3
 python-multipart
 numpy==2.1.*
+scikit-learn
+requests

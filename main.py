@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-from api import cat, medicine, recognition, mediSchedule, s3_upload, s3_view
+from api import cat, medicine, mediSchedule, s3_upload, s3_view, recognition
 import os
 
 app = FastAPI()
@@ -37,7 +37,4 @@ app.include_router(s3_upload.router, prefix="/catcin")
 app.include_router(s3_view.router, prefix="/catcin")
 
 # ===== SPA 처리 라우터 등록 =====
-@app.get("/{full_path:path}")
-async def serve_react_app(request: Request):
-    return FileResponse(os.path.join(FRONTEND_BUILD, "index.html"))
-
+app.mount("/", StaticFiles(directory=FRONTEND_BUILD, html=True), name="spa")

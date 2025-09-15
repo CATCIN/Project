@@ -21,6 +21,10 @@ def make_presigned_url(bucket: str, key: str, expires=600) -> str:
     )
 
 
+# ============================================================
+#  단일 촬영 업로드 (사진 1장에 대한 API, (source='system'))
+# ============================================================
+"""
 @router.post("/upload-shot")
 async def upload_shot(
     file: UploadFile = File(...),
@@ -29,9 +33,6 @@ async def upload_shot(
     source: str = Form("system"),
     note: str = Form(""),
 ):
-    """
-    단일 촬영 업로드 (촬영시각+인덱스 포함)
-    """
     try:
         content = await file.read()
 
@@ -80,16 +81,16 @@ async def upload_shot(
         raise HTTPException(500, "AWS credentials not found")
     except Exception as e:
         raise HTTPException(500, f"upload_shot error: {e}")
+"""
 
-
+# ===============================================================
+#  사이트에서 고양이 사진 및 정보 수동 등록 API (source='user')
+# ===============================================================
 @router.post("/register")
 async def register_from_site(
     file: UploadFile = File(...),
     note: str = Form(""),
 ):
-    """
-    사이트에서 수동 등록 (source='user')
-    """
     try:
         content = await file.read()
         dt = datetime.now(timezone.utc)
