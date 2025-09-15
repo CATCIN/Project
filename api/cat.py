@@ -16,33 +16,52 @@ def make_presigned_url(bucket: str, key: str, expires=600) -> str:
 
 router = APIRouter()
 
-# 고양이 등록
+
 @router.post("/cats")
 async def create_cat(cat: Cat):
     await engine.save(cat)
     return cat
 
-# 전체 고양이 조회
-@router.get("/cats")
+@router.get("/cats", summary="모든 고양이 목록 조회")
 async def all_cats():
+    """DB에 저장된 모든 고양이의 목록을 반환합니다."""
     cats = await engine.find(Cat)
-    result = []
+    
+    response_data = []
     for c in cats:
-        doc = c.dict()
-        doc["id"] = str(c.id)  
-        doc["image_url"] = make_presigned_url(S3_BUCKET, c.image_path, 600) if c.image_path else None
-        result.append(doc)
-    return result
+        doc = c.model_dump() 
+        doc["id"] = str(c.id) 
 
-# 특정 고양이 조회
-@router.get("/cats/{cat_id}")
+        # image_path가 비어있지 않다면, 그 리스트의 '첫 번째' 항목으로 URL을 생성합니다.
+        if c.image_path:
+            doc["image_url"] = make_presigned_url(S3_BUCKET, c.image_path[0])
+        else:
+            doc["image_url"] = None
+        
+        response_data.append(doc)
+        
+    return response_data
+
+@router.get("/cats/{cat_id}", summary="특정 고양이 정보 조회")
 async def get_cat(cat_id: str):
-    cat = await engine.find_one(Cat, Cat.id == ObjectId(cat_id))
+    """ID를 사용하여 특정 고양이의 상세 정보를 조회합니다."""
+    try:
+        obj_id = ObjectId(cat_id)
+    except Exception:
+        raise HTTPException(status_code=400, detail="유효하지 않은 cat_id 형식입니다.")
+        
+    cat = await engine.find_one(Cat, Cat.id == obj_id)
     if cat is None:
-        raise HTTPException(404, detail="Cat not found")
-    doc = cat.dict()
+        raise HTTPException(status_code=404, detail="해당 ID의 고양이를 찾을 수 없습니다.")
+    
+    doc = cat.model_dump() 
     doc["id"] = str(cat.id)
-    doc["image_url"] = make_presigned_url(S3_BUCKET, cat.image_path, 600) if cat.image_path else None
+    
+    if cat.image_path:
+        doc["image_url"] = make_presigned_url(S3_BUCKET, cat.image_path[0])
+    else:
+        doc["image_url"] = None
+        
     return doc
 
 # 고양이 삭제

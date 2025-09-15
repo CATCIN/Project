@@ -1,4 +1,4 @@
-# api/s3_upload.py
+# 사용 안함 # 
 from fastapi import APIRouter, File, UploadFile, Form, HTTPException
 from typing import Optional, List
 from datetime import datetime, timezone
@@ -86,7 +86,7 @@ async def upload_shot(
 # ===============================================================
 #  사이트에서 고양이 사진 및 정보 수동 등록 API (source='user')
 # ===============================================================
-@router.post("/register")
+@router.post("/register", summary="사이트에서 사용자 수동 등록")
 async def register_from_site(
     file: UploadFile = File(...),
     note: str = Form(""),
@@ -95,24 +95,24 @@ async def register_from_site(
         content = await file.read()
         dt = datetime.now(timezone.utc)
 
-        # 파일명
+        # 파일명 생성
         date_prefix = dt.strftime("%Y-%m-%d")
         timestamp = dt.strftime("%Y%m%d_%H%M%S")
-        ext = (file.filename.rsplit(".", 1)[-1] or "bin")
-        s3_key = f"{date_prefix}/{timestamp}.user.{ext}"
+        ext = (file.filename.rsplit(".", 1)[-1] or "jpg")
+        s3_key = f"{date_prefix}/{timestamp}.user.{ext}" 
 
         # S3 업로드
         s3_client.put_object(
             Bucket=S3_BUCKET,
             Key=s3_key,
             Body=content,
-            ContentType=file.content_type or "application/octet-stream",
+            ContentType=file.content_type or "image/jpeg",
         )
 
         # DB 저장
         cat = Cat(
-            image_path=s3_key,
-            feature_vector=[0.0],
+            image_path=[s3_key],
+            feature_vector=[0.0], # 초기 벡터
             source="user",
             save_at=dt.replace(tzinfo=None),
             last_seen=dt.replace(tzinfo=None),
@@ -126,4 +126,4 @@ async def register_from_site(
             "image_url": make_presigned_url(S3_BUCKET, s3_key),
         }
     except Exception as e:
-        raise HTTPException(500, f"register error: {e}")
+        raise HTTPException(status_code=500, detail=f"register error: {e}")

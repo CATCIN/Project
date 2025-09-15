@@ -13,18 +13,15 @@ class Category(str, Enum):
     anthelmintic = "구충제"
 
 class Cat(Model):
-    image_path: List[str]
-    feature_vector: List[float]
+    cat_code: Optional[str] = None  # 사람이 보기 쉬운 고양이 코드 (예: CAT_001)
     source: Literal["user", "system"]
-    save_at: datetime = Field(default_factory=datetime.utcnow)
-    
-    cat_code: Optional[str] = None         # 사람이 보기 쉬운 고양이 코드 (CAT_0001)
-    stats_seen: int = 1                    # 몇 번 인식됐는지 카운터
-    last_seen: datetime = Field(default_factory=datetime.utcnow)  # 마지막 본 시간
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-    updated_at: datetime = Field(default_factory=datetime.utcnow)
-    
+    created_at: datetime = Field(default_factory=datetime.utcnow)   # 최초 등록일 (한 번 생성되면 바뀌지 않음)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)   # 레코드가 변경될 때마다 갱신되는 마지막 업데이트 날짜
+    stats_seen: int = 1            # 업데이트 된 횟수, 본 횟수
+
     note: str = ""
+    image_path: List[str]          # s3 경로 리스트
+    feature_vector: List[float]
 
 class Medicine(Model):
     name: str

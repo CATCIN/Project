@@ -1,3 +1,4 @@
+# 사용 안함 # 
 from fastapi import APIRouter, HTTPException, Query
 import os, boto3
 
