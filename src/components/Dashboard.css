@@ -6,37 +6,40 @@
   flex-direction: column;
 }
 
-/* 상단 영역: 두 개의 위젯을 좌우로 배치 */
+/* 상단 영역 */
 .dashboard-top {
   display: flex;
   justify-content: space-between;
   margin-bottom: 24px;
+  overflow: hidden; 
 }
 
-/* 왼쪽: 최근 인식된 고양이 섹션 */
-.recent-cats-wrapper {
-  flex: 1; /* 화면의 남는 공간을 전부 차지하되 */
-  margin-right: 20px; /* 오른쪽 차트와 간격 */
-}
-
-/* 오른쪽: Pie Chart 위젯 */
-.medicine-widget-wrapper {
-  width: 340px; /* 고정 너비 */
-}
-
-/* 하단 영역: 두 개 패널(25%:75% 혹은 50%:50%) */
+/* 하단 영역: 두 개 패널 */
 .dashboard-bottom {
   display: flex;
   justify-content: space-between;
+  overflow: hidden; 
 }
 
-/* 왼쪽: 오늘 투약 대상 고양이 */
+/* 각 위젯 wrapper */
+.recent-cats-wrapper {
+  flex: 1;
+  margin-right: 20px;
+  min-width: 400px; /* 고양이 이미지 섹션의 최소 너비 설정 (원하는 값으로 조정) */
+}
+
+.medicine-widget-wrapper {
+  width: 340px; /* 고정 너비 */
+  min-width: 300px; /* 파이 차트 위젯의 최소 너비 설정 (필요시) */
+}
+
 .today-cats-wrapper {
   flex: 1;
   margin-right: 20px;
+  min-width: 250px; /* 오늘 투약 리스트의 최소 너비 설정 */
 }
 
-/* 오른쪽: 최근 투약량 */
 .recent-dosage-wrapper {
   flex: 1;
+  min-width: 400px; /* 최근 투약량 그래프의 최소 너비 설정 */
 }

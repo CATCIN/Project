@@ -18,7 +18,7 @@ function CatListPage() {
     async function loadCats() {
       try {
         const data = await fetchCatList();
-        const sorted = data.sort((a, b) => new Date(b.save_at) - new Date(a.save_at));
+        const sorted = data.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
         setCats(sorted);
       } catch (err) {
         console.error(err);
@@ -70,18 +70,18 @@ function CatListPage() {
 
       <div className="cat-cards-container">
         {currentCats.map((cat) => {
-          const [datePart, timePart] = cat.save_at.split('T');
+          const [datePart, timePart] = (cat.updated_at || '').split('T');
           const timeWithoutMs = timePart.split('.')[0];
           const formattedSaveAt = `${datePart} ${timeWithoutMs}`;
-          const imageUrl = cat.image_path?.trim() || null;
-
+          const imagePath = cat.image_path && cat.image_path.length > 0 ? cat.image_path[0].trim() : null;
+          
           return (
             <div key={cat.id} className="cat-card">
               <div className="cat-image-wrapper">
-                {imageUrl ? (
+                {imagePath ? (
                   <img
                     className="cat-image"
-                    src={imageUrl}
+                    src={imagePath}
                     alt={cat.note || 'Cat image'}
                     onError={(e) => {
                       e.currentTarget.onerror = null;
@@ -95,7 +95,7 @@ function CatListPage() {
               </div>
 
               <div className="cat-info">
-                <p className="cat-id">{cat.id}</p>
+                <p className="cat-code">{cat.cat_code}</p>
                 <p className="cat-save-at">{formattedSaveAt}</p>
                 <button
                   className="detail-button"
