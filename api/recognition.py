@@ -148,12 +148,8 @@ async def register_from_site_and_generate_vector(
         )
         await engine.save(cat)
 
-        return {
-            "cat_id": str(cat.id),
-            "image_key": s3_key,
-            "image_url": make_presigned_url(S3_BUCKET, s3_key),
-            "message": "고양이 등록 및 특징 벡터 생성이 완료되었습니다."
-        }
+        return cat
+        
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"수동 등록 중 오류 발생: {e}")
 
