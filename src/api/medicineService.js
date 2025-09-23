@@ -14,7 +14,6 @@ export async function fetchMedicineList() {
 export async function createMedicine(formData) {
   const res = await fetch(API_URL, {
     method: 'POST',
-    // 브라우저가 자동으로 multipart/form-data; boundary=… 헤더를 붙여줍니다.
     body: formData,
   });
 

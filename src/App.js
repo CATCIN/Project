@@ -9,10 +9,11 @@ import Dashboard from './components/Dashboard';
 
 import CatListPage from './pages/CatListPage';
 import CatDetailPage from './pages/CatDetailPage';
-import MedicineListPage  from './pages/MedicineListPage';   // 페이지 컴포넌트 import
-import MedicineFormPage  from './pages/MedicineFormPage';   // 등록 페이지 import
-import SchedulePage      from './pages/SchedulePage';       // 스케줄 목록 import
-import ScheduleFormPage  from './pages/ScheduleFormPage';   // 스케줄 생성 import
+import CatFormPage from './pages/CatFormPage';
+import MedicineListPage   from './pages/MedicineListPage';
+import MedicineFormPage   from './pages/MedicineFormPage';
+import SchedulePage       from './pages/SchedulePage';
+import ScheduleFormPage   from './pages/ScheduleFormPage'; 
 
 
 function App() {
@@ -31,7 +32,7 @@ function App() {
             <Route path="/catcin/cats" element={<CatListPage />} />
 
             {/* 고양이 등록 페이지 */}
-            {/*<Route path="/cats/new" element={<CreateCatPage />} />*/}
+            <Route path="/catcin/cats/new" element={<CatFormPage />} />
 
             {/* 고양이 상세 (예: /cats/1) */}
             <Route path="/catcin/cats/:id" element={<CatDetailPage />} />

@@ -1,45 +1,45 @@
-/* src/components/Dashboard.css */
+/* Dashboard.css */
 
-/* dashboard 전체 레이아웃 */
 .dashboard {
   display: flex;
   flex-direction: column;
 }
 
-/* 상단 영역 */
 .dashboard-top {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 24px;
-  overflow: hidden; 
+  gap: 20px; 
+  flex-wrap: nowrap; 
+  overflow-x: auto; /* 내용이 넘칠 경우 수평 스크롤바 생성 */
 }
 
-/* 하단 영역: 두 개 패널 */
 .dashboard-bottom {
   display: flex;
-  justify-content: space-between;
-  overflow: hidden; 
+  gap: 20px; 
+  margin-top: 24px;
+  flex-wrap: nowrap; 
+  overflow-x: auto; /* 내용이 넘칠 경우 수평 스크롤바 생성 */
 }
 
-/* 각 위젯 wrapper */
 .recent-cats-wrapper {
-  flex: 1;
-  margin-right: 20px;
+  /*flex: 1;*/ /* 남은 공간을 채우는 flex 설정 제거 */
   min-width: 400px; /* 고양이 이미지 섹션의 최소 너비 설정 (원하는 값으로 조정) */
+  flex-shrink: 0; /* 요소가 줄어들지 않도록 고정 */
 }
 
 .medicine-widget-wrapper {
   width: 340px; /* 고정 너비 */
-  min-width: 300px; /* 파이 차트 위젯의 최소 너비 설정 (필요시) */
+  min-width: 300px;
+  flex-shrink: 0; /* 요소가 줄어들지 않도록 고정 */
 }
 
 .today-cats-wrapper {
-  flex: 1;
-  margin-right: 20px;
+  /*flex: 1;*/ /* 남은 공간을 채우는 flex 설정 제거 */
   min-width: 250px; /* 오늘 투약 리스트의 최소 너비 설정 */
+  flex-shrink: 0; /* 요소가 줄어들지 않도록 고정 */
 }
 
 .recent-dosage-wrapper {
-  flex: 1;
+  /*flex: 1;*/ /* 남은 공간을 채우는 flex 설정 제거 */
   min-width: 400px; /* 최근 투약량 그래프의 최소 너비 설정 */
+  flex-shrink: 0; /* 요소가 줄어들지 않도록 고정 */
 }

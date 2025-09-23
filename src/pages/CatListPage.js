@@ -1,7 +1,5 @@
-// src/pages/CatListPage.js
-
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { fetchCatList, deleteCat } from '../api/catService';
 import './CatListPage.css';
 
@@ -67,32 +65,37 @@ function CatListPage() {
   return (
     <div className="cat-list-page">
       <h1>Cat List</h1>
-
+      <button
+        className="add-cat-button"
+        onClick={() => navigate('/catcin/cats/new')}
+      >
+        Add Cat
+      </button>
       <div className="cat-cards-container">
         {currentCats.map((cat) => {
           const [datePart, timePart] = (cat.updated_at || '').split('T');
           const timeWithoutMs = timePart.split('.')[0];
           const formattedSaveAt = `${datePart} ${timeWithoutMs}`;
-          const imagePath = cat.image_path && cat.image_path.length > 0 ? cat.image_path[0].trim() : null;
+          const imagePath = cat.image_url;
           
           return (
-            <div key={cat.id} className="cat-card">
-              <div className="cat-image-wrapper">
-                {imagePath ? (
-                  <img
-                    className="cat-image"
-                    src={imagePath}
-                    alt={cat.note || 'Cat image'}
-                    onError={(e) => {
-                      e.currentTarget.onerror = null;
-                      e.currentTarget.src = '';
-                      e.currentTarget.style.display = 'none';
-                    }}
-                  />
-                ) : (
-                  <div className="cat-no-image">No Image</div>
-                )}
-              </div>
+              <div key={cat.id} className="cat-card">
+                <div className="cat-image-wrapper">
+                  {imagePath ? (
+                    <img
+                      className="cat-image"
+                      src={imagePath} // <- 이제 올바른 이미지 주소가 들어감
+                      alt={cat.note || 'Cat image'}
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = '';
+                        e.currentTarget.style.display = 'none';
+                      }}
+                    />
+                  ) : (
+                    <div className="cat-no-image">No Image</div>
+                  )}
+                </div>
 
               <div className="cat-info">
                 <p className="cat-code">{cat.cat_code}</p>

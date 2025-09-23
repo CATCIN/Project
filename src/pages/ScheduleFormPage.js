@@ -1,36 +1,32 @@
-// src/pages/ScheduleFormPage.js
-
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// src/pages/ScheduleFormPage.js (이 파일 하나만 사용합니다)
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { fetchMedicineList } from '../api/medicineService';
 import { createSchedule } from '../api/scheduleService';
 import './ScheduleFormPage.css';
 
 function ScheduleFormPage() {
+  const location = useLocation();
   const navigate = useNavigate();
 
-  // 1) 약 목록 상태
+  // URL 쿼리 파라미터에서 cat_id를 가져옵니다. 없으면 null이 됩니다.
+  const params = new URLSearchParams(location.search);
+  const cat_id = params.get('cat_id');
+
   const [medicines, setMedicines] = useState([]);
   const [loadingMeds, setLoadingMeds] = useState(true);
   const [errorMeds, setErrorMeds] = useState(null);
 
-  // 2) 폼 상태
-  const [medicineId, setMedicineId] = useState('');
-  const [intervalDays, setIntervalDays] = useState(1);
-  const [dose, setDose] = useState(1);
-  const [note, setNote] = useState('');
-
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
 
-  // 3) 약 목록 불러오기
+  // 약 목록 불러오기
   useEffect(() => {
     async function loadMeds() {
       try {
         const data = await fetchMedicineList();
         setMedicines(data);
       } catch (err) {
-        console.error(err);
         setErrorMeds(err.message || 'Failed to load medicines');
       } finally {
         setLoadingMeds(false);
@@ -39,30 +35,27 @@ function ScheduleFormPage() {
     loadMeds();
   }, []);
 
-  // 4) 폼 제출 핸들러
+  // 폼 제출 핸들러 (개선됨)
   async function handleSubmit(e) {
     e.preventDefault();
     setSubmitting(true);
     setError(null);
 
-    // 필수값 검사
-    if (!medicineId || !intervalDays || !dose) {
-      setError('Medicine, Interval, Dose 필수 입력 항목입니다.');
-      setSubmitting(false);
-      return;
+    // FormData가 form 요소의 모든 필드(숨겨진 cat_id 포함)를 자동으로 수집합니다.
+    const formData = new FormData(e.target);
+    
+    // FormData의 medicine_id가 비어있는지 직접 확인
+    if (!formData.get('medicine_id')) {
+        setError('약을 선택해주세요.');
+        setSubmitting(false);
+        return;
     }
-
-    const formData = new FormData();
-    formData.append('medicine_id', medicineId);
-    formData.append('interval_days', intervalDays.toString());
-    formData.append('dose', dose.toString());
-    formData.append('note', note);
 
     try {
       await createSchedule(formData);
-      navigate('/schedules');
+      // 성공 후 스케줄 목록 페이지로 이동
+      navigate('/schedules'); 
     } catch (err) {
-      console.error(err);
       setError(err.message || 'Failed to create schedule');
     } finally {
       setSubmitting(false);
@@ -71,7 +64,8 @@ function ScheduleFormPage() {
 
   return (
     <div className="schedule-form-page">
-      <h1>Add New Schedule</h1>
+      {/* cat_id 존재 여부에 따라 제목을 동적으로 변경 */}
+      <h1>{cat_id ? '특정 고양이 투약일정 생성' : '전체 투약일정 생성'}</h1>
 
       {loadingMeds ? (
         <p>Loading medicines...</p>
@@ -79,16 +73,11 @@ function ScheduleFormPage() {
         <p style={{ color: 'red' }}>Error: {errorMeds}</p>
       ) : (
         <form className="schedule-form" onSubmit={handleSubmit}>
-          {/* Medicine 선택 */}
+          {/* 약 선택 (name 속성 추가) */}
           <div className="form-group">
-            <label htmlFor="medicineId">Medicine*</label>
-            <select
-              id="medicineId"
-              value={medicineId}
-              required
-              onChange={(e) => setMedicineId(e.target.value)}
-            >
-              <option value="">-- Select Medicine --</option>
+            <label htmlFor="medicine_id">약*</label>
+            <select id="medicine_id" name="medicine_id" required>
+              <option value="">-- 약을 선택하세요 --</option>
               {medicines.map((med) => (
                 <option key={med.id} value={med.id}>
                   {med.name} ({med.category})
@@ -97,65 +86,62 @@ function ScheduleFormPage() {
             </select>
           </div>
 
-          {/* Interval (days) */}
+          {/* 투약 주기 (name 속성 추가) */}
           <div className="form-group">
-            <label htmlFor="intervalDays">Interval (days)*</label>
+            <label htmlFor="interval_days">투약 주기(일)*</label>
             <input
-              id="intervalDays"
+              id="interval_days"
+              name="interval_days"
               type="number"
               min="1"
-              value={intervalDays}
+              defaultValue="1"
               required
-              onChange={(e) =>
-                setIntervalDays(parseInt(e.target.value, 10) || 1)
-              }
             />
           </div>
 
-          {/* Dose */}
+          {/* 용량 (name 속성 추가) */}
           <div className="form-group">
-            <label htmlFor="dose">Dose*</label>
+            <label htmlFor="dose">용량(알)*</label>
             <input
               id="dose"
+              name="dose"
               type="number"
               min="1"
-              value={dose}
+              defaultValue="1"
               required
-              onChange={(e) => setDose(parseInt(e.target.value, 10) || 1)}
             />
           </div>
 
-          {/* Note (선택) */}
+          {/* 비고 (name 속성 추가) */}
           <div className="form-group">
-            <label htmlFor="note">Note</label>
+            <label htmlFor="note">비고</label>
             <textarea
               id="note"
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
+              name="note"
               placeholder="예: 식전 투약"
               rows="3"
             />
           </div>
 
-          {/* 에러 메시지 */}
+          {/* ★★★ 핵심 ★★★ */}
+          {/* cat_id가 URL에 존재할 때만 이 숨겨진 input을 렌더링합니다. */}
+          {cat_id && <input type="hidden" name="cat_id" value={cat_id} />}
+
           {error && <p className="error-text">{error}</p>}
 
-          {/* 제출 및 취소 버튼 */}
-          <button
-            type="submit"
-            className="submit-button"
-            disabled={submitting}
-          >
-            {submitting ? 'Submitting...' : 'Create Schedule'}
-          </button>
-          <button
-            type="button"
-            className="cancel-button"
-            onClick={() => navigate('/catcin/schedules')}
-            disabled={submitting}
-          >
-            Cancel
-          </button>
+          <div className="form-actions">
+            <button type="submit" className="submit-button" disabled={submitting}>
+              {submitting ? '생성 중...' : '일정 생성'}
+            </button>
+            <button
+              type="button"
+              className="cancel-button"
+              onClick={() => navigate(-1)} // 간단하게 이전 페이지로 이동
+              disabled={submitting}
+            >
+              취소
+            </button>
+          </div>
         </form>
       )}
     </div>

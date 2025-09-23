@@ -1,7 +1,7 @@
 // src/pages/CatFormPage.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { registerCatManual } from '../api/catService';
+import { registerCatManual } from '../api/catService'; 
 import './CatFormPage.css';
 
 function CatFormPage() {
@@ -91,25 +91,22 @@ function CatFormPage() {
             placeholder="예: 귀 안쪽 상처, 식후 투약 등"
             value={note}
             onChange={(e) => setNote(e.target.value)}
-            disabled={submitting}
-          />
+            />
         </div>
 
         {error && <p className="error-text">{error}</p>}
 
-        <div className="actions">
-          <button type="submit" className="submit-button" disabled={submitting}>
-            {submitting ? '등록 중...' : '등록하기'}
-          </button>
-          <button
-            type="button"
-            className="cancel-button"
-            disabled={submitting}
-            onClick={() => navigate('/catcin/cats')}
-          >
-            취소
-          </button>
-        </div>
+        <button type="submit" className="submit-button" disabled={submitting}>
+          {submitting ? 'Submitting...' : 'Create Cat'}
+        </button>
+        <button
+          type="button"
+          className="cancel-button"
+          onClick={() => navigate('/catcin/cats')}
+          disabled={submitting}
+        >
+          취소하기
+        </button>
       </form>
     </div>
   );
