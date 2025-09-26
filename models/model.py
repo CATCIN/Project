@@ -32,20 +32,23 @@ class Medicine(Model):
     note: str = ""
 
 class MediLog(Model):
-    cat: Cat = Reference()
-    medicine_id: Optional[ObjectId] = Field(None)
+    cat_id: ObjectId      
+    medicine_id: ObjectId
     administered_at: datetime = Field(default_factory=datetime.utcnow)
 
 class MediSchedule(Model):
     """
-    하나의 스케줄만 존재하며, 모든 고양이에게 동일하게 적용됩니다.
+    고양이별 또는 전체 고양이에게 적용되는 투약 스케줄 모델
+    - cat 필드가 None이면 전체 고양이 스케줄
+    - cat 필드가 Cat 객체를 참조하면 특정 고양이 스케줄
     """
     medicine: Medicine = Reference()
     interval_days: int
     dose: int = Field(1)
     note: str = ""
     created_at: Optional[datetime] = Field(default_factory=datetime.utcnow)
-    cat: Optional[Cat] = Field(default=None)
+    cat_id: Optional[ObjectId] = Field(None)
+
     @property
     def next_due(self) -> datetime:
         base = self.created_at or datetime.utcnow()

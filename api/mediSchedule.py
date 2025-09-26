@@ -1,17 +1,44 @@
 from fastapi import APIRouter, HTTPException, Form
 from odmantic import ObjectId
-from typing import List
+from typing import List, Optional
 from models.model import MediSchedule, Medicine, MediLog, Cat
 from core.database import engine
 from datetime import datetime, timedelta
 
 router = APIRouter()
 
-@router.get("/mediSchedules", response_model=List[MediSchedule])
-async def get_all_schedules():
+@router.get("/mediSchedules", summary="모든 투약 스케줄 목록 조회")
+async def get_all_schedules() -> List[dict]:
+    """
+    DB에 저장된 모든 투약 스케줄 목록을 반환
+    각 스케줄에 연결된 약과 고양이의 상세 정보를 포함
+    """
     schedules = await engine.find(MediSchedule)
-    return schedules
+    
+    response_data = []
+    for schedule in schedules:
+        # 1. 스케줄에 연결된 약(Medicine)의 상세 정보를 조회
+        medicine_doc = await engine.find_one(Medicine, Medicine.id == schedule.medicine.id)
+        
+        # 2. 스케줄에 연결된 고양이(Cat)의 상세 정보를 조회
+        cat_doc = None
+        if schedule.cat_id:
+            cat_doc = await engine.find_one(Cat, Cat.id == schedule.cat_id)
 
+        # 약 정보가 유효한 경우에만 최종 결과에 포함시킴.
+        if medicine_doc:
+            response_data.append({
+                "id": str(schedule.id),
+                "medicine_name": medicine_doc.name,
+                "interval_days": schedule.interval_days,
+                "dose": schedule.dose,
+                "note": schedule.note,
+                # 고양이가 지정된 경우 고양이 코드를, 아니면 '모든 고양이'로 표시
+                "cat_code": cat_doc.cat_code if cat_doc else "모든 고양이",
+                "created_at": schedule.created_at
+            })
+            
+    return response_data
 @router.get("/mediSchedules/{schedule_id}", response_model=MediSchedule)
 async def get_schedule(schedule_id: str):
     schedule = await engine.find_one(MediSchedule, MediSchedule.id == ObjectId(schedule_id))
@@ -19,25 +46,39 @@ async def get_schedule(schedule_id: str):
         raise HTTPException(status_code=404, detail="Schedule not found")
     return schedule
 
-@router.post("/mediSchedules", response_model=MediSchedule)
+@router.post("/mediSchedules", summary="단일 투약 스케줄 생성")
 async def create_schedule_single(
     medicine_id: str = Form(...),
     interval_days: int = Form(...),
     dose: int = Form(1),
-    note: str = Form("")
+    note: str = Form(""),
+    cat_id: Optional[str] = Form(None) 
 ):
     medicine = await engine.find_one(Medicine, Medicine.id == ObjectId(medicine_id))
     if medicine is None:
         raise HTTPException(status_code=404, detail="Medicine not found")
+
+    cat_oid_to_save = None 
+    if cat_id:
+        try:
+            cat_oid = ObjectId(cat_id)
+            cat_exists = await engine.find_one(Cat, Cat.id == cat_oid)
+            if cat_exists is None:
+                raise HTTPException(status_code=404, detail="Cat not found")
+            cat_oid_to_save = cat_oid 
+        except Exception:
+            raise HTTPException(status_code=400, detail="Invalid cat_id format")
 
     schedule = MediSchedule(
         medicine=medicine,
         interval_days=interval_days,
         dose=dose,
         note=note,
+        cat_id=cat_oid_to_save 
     )
     await engine.save(schedule)
     return schedule
+
 
 @router.delete("/mediSchedules/{schedule_id}", status_code=204)
 async def delete_schedule(schedule_id: str):
@@ -47,135 +88,49 @@ async def delete_schedule(schedule_id: str):
     await engine.delete(schedule)
     return
 
-@router.get("/mediSchedules/{cat_id}")
-async def check_due(cat_id: str):
-    """
-    주어진 cat_id에 대해, 모든 Medicine을 순회하면서
-    마지막으로 투약된 시점(MediLog)과 비교해 '다음 투약 예정일(next_due)'과
-    '지금 투약 가능 여부(is_due)'를 반환합니다.
-    - MediLog 모델에서 medicine_id: ObjectId이므로, 이를 기준으로 필터링합니다.
-    """
-
-    # 1) 먼저 cat_id가 유효한 ObjectId인지 확인
-    try:
-        cat_oid = ObjectId(cat_id)
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid cat_id")
-
-    # 2) 해당 고양이(Cat) 존재 여부 확인
-    cat = await engine.find_one(Cat, Cat.id == cat_oid)
-    if not cat:
-        raise HTTPException(status_code=404, detail="Cat not found")
-
-    # 3) DB에 저장된 모든 Medicine을 가져옴
-    medicines: List[Medicine] = await engine.find(Medicine)
-    results = []
-    now = datetime.utcnow()
-
-    for med in medicines:
-        # 4) 이 고양이(cat_oid)와 이 약(med.id)에 해당하는 마지막 투약 로그를 검색
-        last_log = await engine.find_one(
-            MediLog,
-            {
-                # ODMantic 0.4 기준: Reference 필드 ID 비교
-                "cat": cat_oid,
-                "medicine_id": med.id
-            },
-            sort=[-MediLog.administered_at]  # 최신 투약 시점 기준으로 정렬
-        )
-
-        interval_days = med.interval  # 기존 모델에서 Medicine.interval 필드를 사용
-        if last_log:
-            # 5) 마지막 투약 시점 + interval_days 로 다음 투약 예정일 계산
-            next_due_dt = last_log.administered_at + timedelta(days=interval_days)
-            is_due = now >= next_due_dt
-            # ISO 포맷 문자열로 변환
-            next_due_iso = next_due_dt.isoformat()
-            last_admin_iso = last_log.administered_at.isoformat()
-        else:
-            # 6) 아직 투약된 이력이 없으므로, 즉시 투약 가능
-            next_due_iso = "즉시 가능"
-            last_admin_iso = None
-            is_due = True
-
-        results.append({
-            "medicine_id": str(med.id),
-            "medicine_name": med.name,
-            "last_administered": last_admin_iso,
-            "next_due": next_due_iso,
-            "is_due": is_due
-        })
-
-    return {
-        "cat_id": str(cat.id),
-        "medications": results
-    }
-
-
-@router.post("/mediLogs", response_model=MediLog)
-async def create_mediLog(
+@router.post("/medi-logs", summary="투약 기록 생성")
+async def create_medication_log(
     cat_id: str = Form(...),
-    medicine_id: str = Form(...),
+    medicine_id: str = Form(...)
 ):
-    # 1) cat_id 유효성 검증 및 Cat 조회
+    """
+    투약 완료 후, 어떤 고양이에게 어떤 약을 투약했는지 로그를 남깁니다.
+    """
     try:
         cat_oid = ObjectId(cat_id)
-    except Exception:
-        raise HTTPException(status_code=400, detail="Invalid cat_id")
-
-    cat = await engine.find_one(Cat, Cat.id == cat_oid)
-    if not cat:
-        raise HTTPException(status_code=404, detail="Cat not found")
-
-    # 2) medicine_id 유효성 검증 (Document 존재 여부는 체크하지 않음)
-    try:
         med_oid = ObjectId(medicine_id)
     except Exception:
-        raise HTTPException(status_code=400, detail="Invalid medicine_id")
+        raise HTTPException(status_code=400, detail="Invalid ID format.")
 
-    # 4) MediLog 객체 생성 시, medicine_id 필드에 ObjectId만 넘겨준다
-    med_log = MediLog(
-        cat=cat,
-        medicine_id=med_oid,
-    )
-    await engine.save(med_log)
-    return med_log
+    cat_exists = await engine.find_one(Cat, Cat.id == cat_oid)
+    med_exists = await engine.find_one(Medicine, Medicine.id == med_oid)
+    if not cat_exists or not med_exists:
+        raise HTTPException(status_code=404, detail="Cat or Medicine not found.")
 
-@router.get("/mediLogs/{cat_id}")
-async def get_mediLog(cat_id: str):
-    """
-    고양이(cat_id)별 투약 로그를 반환합니다.
-    - aggregation 없이, cat 필드를 ObjectId로 직접 비교하여 조회합니다.
-    """
-    # 1) cat_id를 ObjectId로 변환
+    new_log = MediLog(cat_id=cat_oid, medicine_id=med_oid)
+    await engine.save(new_log)
+    
+    return {"message": "Medication log created successfully", "log": new_log}
+
+@router.get("/mediLogs/{cat_id}", summary="특정 고양이의 투약 기록 조회")
+async def get_mediLogs_for_cat(cat_id: str):
     try:
         cat_oid = ObjectId(cat_id)
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid cat_id")
 
-    # 2) Cat 문서가 실제로 존재하는지 확인
-    cat = await engine.find_one(Cat, Cat.id == cat_oid)
-    if cat is None:
-        raise HTTPException(status_code=404, detail="Cat not found")
+    raw_logs = await engine.find(MediLog, {"cat_id": cat_oid})
 
-    # 3) MediLog 조회: 참조 대신 ObjectId로 직접 matching
-    #    - {"cat": cat_oid} 형태의 dict 필터링을 쓰면 aggregation이 발생하지 않습니다.
-    raw_logs: List[MediLog] = await engine.find(
-        MediLog,
-        {"cat": cat_oid}
-    )
-
-    # 4) JSON 직렬화할 수 있는 형태로 가공
     response_logs = []
     for log in raw_logs:
+        medicine_doc = await engine.find_one(Medicine, Medicine.id == log.medicine_id)
         response_logs.append({
             "id": str(log.id),
-            "cat_id": str(log.cat.id),
-            "medicine_id": str(log.medicine_id) if log.medicine_id else None,
+            "cat_id": str(log.cat_id),
+            "medicine_id": str(log.medicine_id),
+            "medicine_name": medicine_doc.name if medicine_doc else "알 수 없는 약",
+            "medicine_category": medicine_doc.category if medicine_doc else "알 수 없는 카테고리",
             "administered_at": log.administered_at.isoformat()
         })
 
-    return {
-        "cat_id": cat_id,
-        "logs": response_logs
-    }
+    return {"logs": response_logs}

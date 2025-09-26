@@ -24,14 +24,15 @@ async def get_medicine(medicine_id: str):
         raise HTTPException(404, detail="Medicine not found")
     return medicine
 
+# 약 생성
 @router.post("/medicines", response_model=Medicine)
 async def create_medicine(
-    name: str = Form(...),                     # 반드시 Form-data 에 "name" 키가 있어야 함
-    category: Category = Form(...),             # Form-data 의 "category"
-    interval: int = Form(...),                  # Form-data 의 "interval" (정수)
-    expires_date: date = Form(...),             # Form-data 의 "expires_date" ("YYYY-MM-DD" 문자열)
-    note: str = Form(""),                       # Form-data 의 "note" (선택사항)
-    image: UploadFile = File(None),             # multipart/form-data 의 "image" (파일 업로드)
+    name: str = Form(...),                    
+    category: Category = Form(...),          
+    interval: int = Form(...),                
+    expires_date: date = Form(...),     
+    note: str = Form(""),                    
+    image: UploadFile = File(None),            
 ):
     # 1) Medicine 모델 생성
     medicine = Medicine(
@@ -52,7 +53,7 @@ async def create_medicine(
         image_path = await save_image(image)
         medicine.image_url = image_path
 
-    # 3) MongoDB(ODMantic)를 통해 저장
+    # 3) MongoDB에 저장
     await engine.save(medicine)
     return medicine
 
@@ -70,24 +71,20 @@ async def delete_medicine(medicine_id: str):
     except Exception:
         raise HTTPException(status_code=400, detail="Invalid medicine_id")
 
-    # 2) DB에서 Medicine 문서를 찾아본다
+    # 2) DB에서 Medicine 문서를 찾음
     med = await engine.find_one(Medicine, Medicine.id == med_oid)
     if not med:
         raise HTTPException(status_code=404, detail="Medicine not found")
 
     # 3) MediSchedule에서 이 medicine을 참조하는 문서들을 모두 삭제
-    #    → MediSchedule.medicine 필드 자체에 ObjectId를 비교
     schedules_to_delete = await engine.find(
         MediSchedule,
         MediSchedule.medicine == med_oid
     )
     for sched in schedules_to_delete:
         await engine.delete(sched)
-    #  ODMantic 1.10+ 버전이면, 아래 한 줄로 일괄 삭제할 수도 있습니다:
-    #    await engine.delete_many(MediSchedule, MediSchedule.medicine == med_oid)
 
     # 4) Medicine 본문 삭제
     await engine.delete(med)
 
-    # status_code=204이므로, 빈 바디(응답 본문 없음)으로 종료
     return
