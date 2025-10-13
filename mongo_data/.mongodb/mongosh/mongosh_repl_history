@@ -1,0 +1,19 @@
+exit
+)
+   { upsert: true }
+   { $set: { sequence_value: 11 } },
+   { _id: "cat_code_sequence" },
+db.getSiblingDB('catcin_db').Counter.updateOne(
+   { upsert: true }
+   { $set: { sequence_value: 11 } },
+   { _id: "cat_code_sequence" },
+db.getSiblingDB('catcin_db').Counter.updateOne()
+   { upsert: true }
+   { $set: { sequence_value: 5 } },
+   { _id: "cat_code_sequence" },
+db.getSiblingDB('catcin_db').Counter.updateOne(
+)
+   { upsert: true }
+   { $set: { sequence_value: 5 } },
+   { _id: "cat_code_sequence" },
+db.getSiblingDB('catcin_db').Counter.updateOne(

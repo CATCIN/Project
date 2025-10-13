@@ -28,7 +28,7 @@ class Medicine(Model):
     category: Category
     interval: int
     expires_date: datetime
-    image_url: Optional[str] = Field(None)  # s3에 올릴 수 있도록 추후 개선(중요X)
+    image_url: Optional[str] = None
     note: str = ""
 
 class MediLog(Model):
@@ -53,3 +53,5 @@ class MediSchedule(Model):
     def next_due(self) -> datetime:
         base = self.created_at or datetime.utcnow()
         return base + timedelta(days=self.interval_days)
+
+        

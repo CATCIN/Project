@@ -1,6 +1,7 @@
 # api/recognition.py
 
 from fastapi import APIRouter, HTTPException, File, UploadFile, Form
+from odmantic.query import desc
 from typing import List
 from sklearn.metrics.pairwise import cosine_similarity
 from models.model import Cat, Medicine, MediSchedule, MediLog
@@ -21,7 +22,8 @@ s3_client = boto3.client("s3")
 
 # --- 환경 변수 및 상수 ---
 S3_BUCKET = os.getenv("S3_BUCKET", "catcin-bucket")
-SAGEMAKER_NOTEBOOK_URL = "https://b69657225980.ngrok-free.app/extract-features"
+SAGEMAKER_NOTEBOOK_URL = "https://supermediocre-unbrined-rebecka.ngrok-free.dev/extract-features"
+#https://b69657225980.ngrok-free.app
 SIMILARITY_THRESHOLD = 0.85
 
 def make_presigned_url(bucket: str, key: str, expires=600) -> str:

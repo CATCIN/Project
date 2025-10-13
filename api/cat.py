@@ -43,7 +43,30 @@ async def all_cats():
         
     return response_data
 
-@router.get("/cats/{cat_id}", summary="특정 고양이 정보 조회")
+@router.get("/cats/recent", summary="[메인페이지용] 최근 인식된 고양이 6마리 조회")
+async def get_recent_cats():
+    """
+    가장 최근에 업데이트된 고양이 6마리의 목록을 반환
+    """
+    recent_cats = await engine.find(
+        Cat, 
+        sort=desc(Cat.updated_at), 
+        limit=6
+    )
+    
+    response_data = []
+    for c in recent_cats:
+        doc = c.model_dump()
+        doc["id"] = str(c.id)
+        if c.image_path:
+            doc["image_url"] = make_presigned_url(S3_BUCKET, c.image_path[0])
+        else:
+            doc["image_url"] = None
+        response_data.append(doc)
+            
+    return response_data
+
+@router.get("/cats/{cat_id}", summary="[모듈] 특정 고양이 정보 조회")
 async def get_cat(cat_id: str):
     """ID를 사용하여 특정 고양이의 상세 정보를 조회합니다."""
     try:
@@ -89,7 +112,7 @@ async def update_cat(cat_id: str, request: Request):
     await engine.save(cat)
     return cat
 
-@router.get("/cats/{cat_id}/schedules", summary="특정 고양이의 투약 스케줄 조회")
+@router.get("/cats/{cat_id}/schedules", summary="[모듈] 특정 고양이의 투약 스케줄 조회")
 async def get_cat_schedules(cat_id: str) -> dict:
     try:
         cat_oid = ObjectId(cat_id)
@@ -116,7 +139,7 @@ async def get_cat_schedules(cat_id: str) -> dict:
     
     return {"medications_status": response_schedules}
 
-@router.get("/cats/{cat_id}/due-medicines", summary="특정 고양이의 투약 필요 약 조회")
+@router.get("/cats/{cat_id}/due-medicines", summary="[모듈] 특정 고양이의 투약 필요 약 조회")
 async def get_due_medicines_for_cat(cat_id: str):
     """
     고양이 ID를 받아, 현재 투약이 필요한 약 목록을 반환함.

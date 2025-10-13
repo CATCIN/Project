@@ -17,15 +17,12 @@ async def get_all_schedules() -> List[dict]:
     
     response_data = []
     for schedule in schedules:
-        # 1. 스케줄에 연결된 약(Medicine)의 상세 정보를 조회
         medicine_doc = await engine.find_one(Medicine, Medicine.id == schedule.medicine.id)
         
-        # 2. 스케줄에 연결된 고양이(Cat)의 상세 정보를 조회
         cat_doc = None
         if schedule.cat_id:
             cat_doc = await engine.find_one(Cat, Cat.id == schedule.cat_id)
 
-        # 약 정보가 유효한 경우에만 최종 결과에 포함시킴.
         if medicine_doc:
             response_data.append({
                 "id": str(schedule.id),
@@ -39,6 +36,7 @@ async def get_all_schedules() -> List[dict]:
             })
             
     return response_data
+    
 @router.get("/mediSchedules/{schedule_id}", response_model=MediSchedule)
 async def get_schedule(schedule_id: str):
     schedule = await engine.find_one(MediSchedule, MediSchedule.id == ObjectId(schedule_id))
@@ -79,6 +77,41 @@ async def create_schedule_single(
     await engine.save(schedule)
     return schedule
 
+@router.get("/schedules/stats/category", summary="약물 카테고리별 스케줄 통계 조회")
+async def get_schedule_stats_by_category():
+    """
+    전체 스케줄을 약물 카테고리별로 그룹화하여 각 카테고리의 스케줄 개수를 반환
+    """
+    pipeline = [
+        {
+            "$lookup": {
+                "from": "Medicine",
+                "localField": "medicine",
+                "foreignField": "_id",
+                "as": "medicine_details"
+            }
+        },
+        {"$unwind": "$medicine_details"},
+        {
+            "$group": {
+                "_id": "$medicine_details.category",
+                "count": {"$sum": 1}
+            }
+        },
+        {
+            "$project": {
+                "_id": 0,
+                "label": "$_id",
+                "value": "$count"
+            }
+        }
+    ]
+
+    schedule_collection = engine.get_collection(MediSchedule)
+    stats_cursor = schedule_collection.aggregate(pipeline)
+    
+    stats = await stats_cursor.to_list(length=None)
+    return stats
 
 @router.delete("/mediSchedules/{schedule_id}", status_code=204)
 async def delete_schedule(schedule_id: str):
@@ -94,7 +127,7 @@ async def create_medication_log(
     medicine_id: str = Form(...)
 ):
     """
-    투약 완료 후, 어떤 고양이에게 어떤 약을 투약했는지 로그를 남깁니다.
+    투약 완료 후, 어떤 고양이에게 어떤 약을 투약했는지 로그를 남김.
     """
     try:
         cat_oid = ObjectId(cat_id)

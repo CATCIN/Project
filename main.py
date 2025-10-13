@@ -4,6 +4,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from api import cat, medicine, mediSchedule, recognition
 import os
+from dotenv import load_dotenv  
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -16,6 +19,7 @@ FRONTEND_IMAGES = os.path.join(FRONTEND_BUILD, "images")
 # ===== CORS 허용 =====
 cors_origins = os.getenv("CORS_ORIGINS", "")
 origins = [origin.strip() for origin in cors_origins.split(",") if origin.strip()]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -37,4 +41,7 @@ app.include_router(mediSchedule.router, prefix="/catcin")
 # ===== SPA 처리 라우터 등록 =====
 @app.get("/{full_path:path}")
 async def serve_react_app(request: Request):
-    return FileResponse(os.path.join(FRONTEND_BUILD, "index.html"))
+    index_path = os.path.join(FRONTEND_BUILD, "index.html")
+    if not os.path.exists(index_path):
+        return {"error": "Frontend build file (index.html) not found."}, 404
+    return FileResponse(index_path)
