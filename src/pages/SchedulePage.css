@@ -91,17 +91,21 @@
   text-align: center;
 }
 
-/* 삭제 버튼(×)이 확실히 보여지도록 스타일 보강 */
-.delete-button {
+
+.schedule-table .delete-button {
   background-color: transparent;
   border: none;
-  color: #c0392b;        /* 진한 빨간색 */
+  color: #c0392b;      /* 진한 빨간색 */
   font-size: 1.2rem;
-  font-weight: bold;     /* 눈에 잘 띄도록 볼드처리 */
+  font-weight: bold;
   cursor: pointer;
   transition: color 0.1s ease-in-out;
   padding: 0;
   line-height: 1;
+}
+
+.schedule-table .delete-button:hover {
+  color: #e74c3c;      /* hover 시 밝은 빨강 */
 }
 
 .delete-button:hover {

@@ -2,25 +2,19 @@
 
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  fetchScheduleList,
-  deleteSchedule, // deleteSchedule 함수 임포트
-} from '../api/scheduleService';
+import { fetchScheduleList, deleteSchedule } from '../api/scheduleService';
 import './SchedulePage.css';
 
 function SchedulePage() {
   const [schedules, setSchedules] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const navigate = useNavigate();
 
-  // 스케줄 삭제 핸들러
   const handleDelete = async (scheduleId) => {
     if (!window.confirm('이 스케줄을 정말 삭제하시겠습니까?')) {
       return;
     }
-
     try {
       await deleteSchedule(scheduleId);
       setSchedules((prev) => prev.filter((sch) => sch.id !== scheduleId));
@@ -45,12 +39,8 @@ function SchedulePage() {
     loadSchedules();
   }, []);
 
-  if (loading) {
-    return <p>Loading schedules…</p>;
-  }
-  if (error) {
-    return <p style={{ color: 'red' }}>Error: {error}</p>;
-  }
+  if (loading) return <p>Loading schedules…</p>;
+  if (error) return <p style={{ color: 'red' }}>Error: {error}</p>;
 
   return (
     <div className="schedule-list-page">
@@ -58,41 +48,40 @@ function SchedulePage() {
       <p>총 {schedules.length}개의 투약 스케줄이 있습니다.</p>
       <button
         className="add-schedule-button"
-        onClick={() => navigate('/catcin/schedule/new')}
+        onClick={() => navigate('/schedule/add')} // 경로 수정
       >
         Add Schedule
       </button>
 
-      {schedules.length === 0 ? (
-        <p className="no-schedules">등록된 스케줄이 없습니다.</p>
-      ) : (
-        <table className="schedule-table">
-          <thead>
-            <tr>
-              <th>생성일</th>
-              <th>투약 주기(일)</th>
-              <th>투약 개수(정)</th>
-              <th>약물명</th>
-              <th>삭제</th>
-            </tr>
-          </thead>
-          <tbody>
-            {schedules.map((sch) => {
-              // created_at이 문자열이라면 'T' 기준으로 포맷
-              const rawCreated = sch.created_at || '';
-              let createdFormatted = 'N/A';
-              if (typeof rawCreated === 'string' && rawCreated.includes('T')) {
-                const [datePart, timePartWithMs] = rawCreated.split('T');
-                const timeWithoutMs = timePartWithMs.split('.')[0];
-                createdFormatted = `${datePart} ${timeWithoutMs}`;
-              }
+      <table className="schedule-table">
+        <thead>
+          <tr>
+            <th>생성일</th>
+            <th>약물명</th>
+            <th>적용 대상</th>
+            <th>투약 주기(일)</th>
+            <th>투약 개수(정)</th>
+            <th>삭제</th>
+          </tr>
+        </thead>
+        <tbody>
+          {schedules.length > 0 ? (
+            schedules.map((sch) => {
+              // 백엔드 데이터 구조가 달라도 안전하게 약물명을 찾습니다.
+              const medicineName = sch.medicine_name || (sch.medicine ? sch.medicine.name : 'N/A');
+              
+              // 날짜 포맷을 간단하고 안전하게 변경합니다.
+              const createdAt = sch.created_at 
+                ? new Date(sch.created_at).toLocaleString('ko-KR') 
+                : 'N/A';
 
               return (
                 <tr key={sch.id}>
-                  <td>{createdFormatted}</td>
+                  <td>{createdAt}</td>
+                  <td>{medicineName}</td>
+                  <td>{sch.cat_code || '전체 적용'}</td>
                   <td className="center-cell">{sch.interval_days}</td>
                   <td className="center-cell">{sch.dose}</td>
-                  <td>{sch.medicine ? sch.medicine.name : 'N/A'}</td>
                   <td className="center-cell">
                     <button
                       className="delete-button"
@@ -104,10 +93,16 @@ function SchedulePage() {
                   </td>
                 </tr>
               );
-            })}
-          </tbody>
-        </table>
-      )}
+            })
+          ) : (
+            <tr>
+              <td colSpan="6" style={{ textAlign: 'center' }}>
+                등록된 스케줄이 없습니다.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 }

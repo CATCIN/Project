@@ -123,7 +123,6 @@ function ScheduleFormPage() {
             />
           </div>
 
-          {/* ★★★ 핵심 ★★★ */}
           {/* cat_id가 URL에 존재할 때만 이 숨겨진 input을 렌더링합니다. */}
           {cat_id && <input type="hidden" name="cat_id" value={cat_id} />}
 

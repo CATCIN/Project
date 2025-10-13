@@ -71,7 +71,6 @@ function MedicineListPage() {
       <div className="medicine-cards-container">
         {medicines.map((med) => (
           <div key={med.id} className="medicine-card">
-            {/* 1) 오른쪽 상단에 삭제(X) 버튼 추가 */}
             <button
               className="delete-button"
               onClick={() => handleDelete(med.id)}
@@ -84,8 +83,13 @@ function MedicineListPage() {
               {med.image_url ? (
                 <img
                   className="medicine-image"
-                  src={`${API_BASE}${med.image_url}`}
+                  src={med.image_url}
                   alt={med.name}
+                  onError={(e) => {
+                    e.currentTarget.onerror = null; 
+                    e.currentTarget.src = ''; 
+                    e.currentTarget.style.display = 'none'; 
+                  }}
                 />
               ) : (
                 <div className="medicine-no-image">No Image</div>

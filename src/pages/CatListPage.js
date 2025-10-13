@@ -84,7 +84,7 @@ function CatListPage() {
                   {imagePath ? (
                     <img
                       className="cat-image"
-                      src={imagePath} // <- 이제 올바른 이미지 주소가 들어감
+                      src={imagePath}
                       alt={cat.note || 'Cat image'}
                       onError={(e) => {
                         e.currentTarget.onerror = null;
