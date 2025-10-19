@@ -1,26 +1,22 @@
 /* src/pages/SchedulePage.css */
 
-/* ─── 페이지 전체 레이아웃 ─── */
+/* ─── 페이지 전체 레이아웃 (기존과 동일) ─── */
 .schedule-list-page {
   max-width: 900px;
   margin: 0 auto;
   padding: 20px;
   font-family: Arial, sans-serif;
 }
-
 .schedule-list-page h1 {
   font-size: 2rem;
   margin-bottom: 16px;
   color: #333;
 }
-
 .schedule-list-page p {
   font-size: 1rem;
   color: #555;
   margin-bottom: 12px;
 }
-
-/* Add Schedule 버튼 */
 .add-schedule-button {
   margin-bottom: 16px;
   padding: 8px 16px;
@@ -30,72 +26,73 @@
   border-radius: 4px;
   font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
-
-.add-schedule-button:disabled {
-  background-color: #888;
-  cursor: not-allowed;
-}
-
-.add-schedule-button:hover:not(:disabled) {
+.add-schedule-button:hover {
   background-color: #163b8b;
 }
 
-/* 스케줄이 없을 때 문구 */
-.no-schedules {
+/* ─── 카드 목록 컨테이너 (기존과 동일) ─── */
+.schedule-list-container {
   margin-top: 20px;
-  font-style: italic;
-  color: #888;
-}
-
-/* ─── 테이블 스타일 ─── */
-.schedule-table {
   width: 100%;
-  border-collapse: collapse;
   background-color: #fff;
   border-radius: 4px;
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* 헤더 셀(컬럼 제목) */
-.schedule-table thead th {
+/* ─── 개별 카드 및 헤더 스타일 (기존과 동일) ─── */
+.schedule-card {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+.schedule-list-container > .schedule-card:last-child {
+  border-bottom: none;
+}
+.schedule-list-container > .schedule-card:not(.schedule-header):hover {
+  background-color: #fafafa;
+}
+.schedule-header {
   background-color: #f5f7fa;
   color: #333;
   font-weight: bold;
-  padding: 12px;
   border-bottom: 2px solid #e0e0e0;
-  text-align: left;
 }
 
-/* 바디 셀 */
-.schedule-table tbody td {
+/* ─── 카드 내부 아이템 (컬럼) 스타일 (기존과 동일) ─── */
+.schedule-item {
   padding: 12px;
-  border-bottom: 1px solid #e0e0e0;
   color: #555;
   font-size: 0.95rem;
-}
-
-/* 마지막 행 아래쪽 border 제거 */
-.schedule-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-/* 행 Hover 효과 */
-.schedule-table tbody tr:hover {
-  background-color: #fafafa;
-}
-
-/* 가운데 정렬 셀 (숫자나 버튼) */
-.center-cell {
   text-align: center;
 }
+.schedule-header .schedule-item {
+  color: #333;
+  text-align: center;
+}
+.schedule-item.date { flex: 2; text-align: left; }
+.schedule-item.medicine-name { flex: 3; text-align: left; }
+.schedule-item.target { flex: 2; }
+.schedule-item.interval { flex: 1.5; }
+.schedule-item.dose { flex: 1.5; }
 
+.schedule-item.action {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-.schedule-table .delete-button {
+/* 삭제 버튼 스타일 */
+.delete-button {
+  position: static;
+
+  /* 기존 스타일 유지 */
   background-color: transparent;
   border: none;
-  color: #c0392b;      /* 진한 빨간색 */
+  color: #c0392b;
   font-size: 1.2rem;
   font-weight: bold;
   cursor: pointer;
@@ -104,24 +101,14 @@
   line-height: 1;
 }
 
-.schedule-table .delete-button:hover {
-  color: #e74c3c;      /* hover 시 밝은 빨강 */
-}
-
 .delete-button:hover {
-  color: #e74c3c;        /* hover 시 밝은 빨강 */
+  color: #e74c3c;
 }
 
-/* 반응형: 모바일에서 가로 스크롤 생기지 않도록 */
-@media (max-width: 600px) {
-  .schedule-table thead th,
-  .schedule-table tbody td {
-    padding: 8px;
-    font-size: 0.9rem;
-  }
 
-  .add-schedule-button {
-    width: 100%;
-    text-align: center;
-  }
+.no-schedules {
+  padding: 40px;
+  text-align: center;
+  font-style: italic;
+  color: #888;
 }

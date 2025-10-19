@@ -86,7 +86,7 @@
   position: relative; /* delete-button을 카드 상단 우측에 배치하기 위해 */
 }
 
-.delete-button {
+.medicine-card-delete-button {
   position: absolute;
   top: 8px;     /* 카드 내부 여백에 맞춰 위치 조정 */
   right: 8px;   /* 카드 모서리에서 약간 안쪽으로 */
@@ -103,11 +103,11 @@
   transition: background 0.2s;
 }
 
-.delete-button:hover {
+.medicine-card-delete-button:hover {
   background: rgba(200, 0, 0, 0.8);
 }
 
-.delete-button:focus {
+.medicine-card-delete-button:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(200, 0, 0, 0.5);
 }

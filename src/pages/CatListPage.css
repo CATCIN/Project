@@ -99,24 +99,31 @@
   background-color: #163b8b;
 }
 
-.detail-button {
-  margin-top: auto; /* 핵심! 나머지 내용 위로 밀고 아래 고정 */
-  padding: 8px 12px;
-  background-color: #1e50ad;
-  color: #fff;
-  border-radius: 4px;
+.cat-card-delete-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 24px;
+  height: 24px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
   border: none;
-  font-size: 1rem;
-  transition: background-color 0.1s ease-in-out;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  font-weight: bold;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transition: background-color 0.2s;
 }
 
-
-.delete-button:hover {
+.cat-card-delete-button:hover {
   background: rgba(200, 0, 0, 0.8);
 }
 
-.delete-button:focus {
+.cat-card-delete-button:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(200, 0, 0, 0.5);
 }

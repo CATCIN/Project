@@ -8,7 +8,7 @@ function CatListPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const catsPerPage = 8;
+  const catsPerPage = 10;
 
   const navigate = useNavigate();
 
@@ -109,7 +109,7 @@ function CatListPage() {
               </div>
 
               <button
-                className="delete-button"
+                className="cat-card-delete-button"
                 onClick={() => handleDelete(cat.id)}
                 title="Delete"
               >

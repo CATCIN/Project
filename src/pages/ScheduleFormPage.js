@@ -54,7 +54,7 @@ function ScheduleFormPage() {
     try {
       await createSchedule(formData);
       // 성공 후 스케줄 목록 페이지로 이동
-      navigate('/schedules'); 
+      navigate('/catcin/schedule'); 
     } catch (err) {
       setError(err.message || 'Failed to create schedule');
     } finally {
@@ -65,7 +65,7 @@ function ScheduleFormPage() {
   return (
     <div className="schedule-form-page">
       {/* cat_id 존재 여부에 따라 제목을 동적으로 변경 */}
-      <h1>{cat_id ? '특정 고양이 투약일정 생성' : '전체 투약일정 생성'}</h1>
+      <h1>{cat_id ? 'Add Cat\'s New Schedule' : 'Add New Schedule'}</h1>
 
       {loadingMeds ? (
         <p>Loading medicines...</p>
@@ -130,7 +130,7 @@ function ScheduleFormPage() {
 
           <div className="form-actions">
             <button type="submit" className="submit-button" disabled={submitting}>
-              {submitting ? '생성 중...' : '일정 생성'}
+              {submitting ? '생성 중...' : 'Create Schedule'}
             </button>
             <button
               type="button"
@@ -138,7 +138,7 @@ function ScheduleFormPage() {
               onClick={() => navigate(-1)} // 간단하게 이전 페이지로 이동
               disabled={submitting}
             >
-              취소
+              Cancel
             </button>
           </div>
         </form>

@@ -16,10 +16,11 @@ function MedicineFormPage() {
   const [error, setError] = useState(null);
 
   const categoryOptions = [
-    { value: '항생제', label: '항생제' },
-    { value: '진통제', label: '진통제' },
-    { value: '비타민', label: '비타민' },
-    { value: '영양제', label: '영양제' },
+    { value: 'antibiotic', label: '항생제' },
+    { value: 'painkiller', label: '진통제' },
+    { value: 'vitamin', label: '비타민' },
+    { value: 'nutritional', label: '영양제' },
+    { value: 'anthelmintic', label: '구충제' }
   ];
 
   async function handleSubmit(e) {

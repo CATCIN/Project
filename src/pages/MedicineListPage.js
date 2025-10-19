@@ -72,7 +72,7 @@ function MedicineListPage() {
         {medicines.map((med) => (
           <div key={med.id} className="medicine-card">
             <button
-              className="delete-button"
+              className="medicine-card-delete-button"
               onClick={() => handleDelete(med.id)}
               title="Delete"
             >

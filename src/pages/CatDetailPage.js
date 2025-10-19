@@ -97,6 +97,7 @@ function CatDetailPage() {
         </div>
         <div className="additional-info-box upcoming-schedules-container">
           <h2>Upcoming Schedules</h2>
+          <div className="schedule-table-wrapper"> 
           <table className="schedule-table">
             <thead>
               <tr>
@@ -104,6 +105,7 @@ function CatDetailPage() {
                 <th>종류</th>
                 <th>투약 주기</th>
                 <th>용량</th>
+                <th>다음 투약일</th>
               </tr>
             </thead>
             <tbody>
@@ -114,15 +116,17 @@ function CatDetailPage() {
                     <td>{schedule.medicine_category || '미분류'}</td>
                     <td>{schedule.interval_days}일</td>
                     <td>{schedule.dose}알</td>
+                    <td>{formatDateTime(schedule.next_due_date)}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="4">등록된 투약 스케줄이 없습니다.</td>
+                  <td colSpan="5">등록된 투약 스케줄이 없습니다.</td>
                 </tr>
               )}
             </tbody>
           </table>
+        </div> 
         </div>
       </div>
     

@@ -63,7 +63,7 @@ function CatFormPage() {
 
   return (
     <div className="cat-register-manual-page">
-      <h1>고양이 수동 등록 (사진 1장)</h1>
+      <h1>Add New Cat</h1>
 
       <form className="cat-register-form" onSubmit={onSubmit}>
         <div className="form-group">
@@ -105,7 +105,7 @@ function CatFormPage() {
           onClick={() => navigate('/catcin/cats')}
           disabled={submitting}
         >
-          취소하기
+          Cancel
         </button>
       </form>
     </div>

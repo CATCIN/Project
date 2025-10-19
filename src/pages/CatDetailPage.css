@@ -1,182 +1,171 @@
-/* src/pages/CatDetailPage.css */
-
-/* 전체 페이지 레이아웃 컨테이너 (기존 유지) */
 .cat-detail-page {
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* 헤더 액션 버튼 정렬 (기존 유지) */
 .header-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-/* 스케줄 추가 버튼 스타일 (기존 유지) */
 .add-schedule-button {
-    padding: 8px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    transition: background-color 0.2s;
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s;
 }
 .add-schedule-button:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
-/* 뒤로 가기 버튼 스타일 (기존 유지) */
 .back-button {
-    padding: 8px 15px;
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    transition: background-color 0.2s;
+  padding: 8px 15px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background-color 0.2s;
 }
 .back-button:hover {
-    background-color: #5a6268;
+  background-color: #5a6268;
 }
 
-/* ========================================= */
-/* 고양이 정보 카드 섹션 (가장 중요하게 수정할 부분) */
-/* ========================================= */
 .cat-info-card {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    flex-wrap: nowrap;
-    overflow-x: auto;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
 .cat-detail-image {
-    width: 300px;
-    height: auto; /* 높이를 자동으로 조절 */
-    border-radius: 8px;
-    flex-shrink: 0;
+  width: 300px;
+  height: auto; 
+  border-radius: 8px;
+  flex-shrink: 0;
 }
 
 .cat-basic-info {
-    /* flex: 1; /* 남은 공간을 차지하도록 설정. 비율은 1:1이 됨 */
-    flex-shrink: 0;
-    padding-right: 20px;
-    min-width: 250px;
+  flex-shrink: 0;
+  padding-right: 20px;
+  min-width: 250px;
 }
 
 .source-tag {
-    margin-left: 10px;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    color: white;
+  margin-left: 10px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: white;
 }
 
 .source-system {
-    background-color: #007bff; /* 파란색 배경 */
+  background-color: #007bff; 
 }
 .source-user {
-    background-color: #28a745; /* 녹색 배경 */
+  background-color: #28a745; 
 }
 
 .upcoming-schedules-container {
-    flex: 2; 
-    min-width: 400px; 
-    border: 1px solid #eee;
-    padding: 12px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    flex-shrink: 0;
+  flex: 2; 
+  min-width: 400px; 
+  border: 1px solid #eee;
+  padding: 12px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  flex-shrink: 0;
 }
 
 .upcoming-schedules-container h2 {
-    margin-top: 0;
-    color: #333;
-    margin-bottom: 15px;
+  margin-top: 0;
+  color: #333;
+  margin-bottom: 15px;
 }
 
 .schedule-table {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
+  overflow-x: auto;
+  display: block;
 }
 
 .schedule-table th,
 .schedule-table td {
-    border: 1px solid #eee;
-    padding: 10px 15px;
-    text-align: left;
-    white-space: nowrap;
+  border: 1px solid #eee;
+  padding: 10px 15px;
+  text-align: left;
+  white-space: nowrap;
 }
 
 .schedule-table th {
-    background-color: #f8f8f8;
-    font-weight: bold;
-    color: #555;
+  background-color: #f8f8f8;
+  font-weight: bold;
+  color: #555;
 }
 
 .schedule-table tbody tr:nth-child(even) {
-    background-color: #fdfdfd;
+  background-color: #fdfdfd;
 }
 
 .schedule-table td {
-    color: #444;
+  color: #444;
 }
 
-/* ========================================= */
-/* Medical History 섹션 (기존 유지) */
-/* ========================================= */
 .medical-history {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 12px;
-    margin-top: 30px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  margin-top: 30px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .medical-history h2 {
-    margin-top: 0;
-    color: #333;
-    margin-bottom: 15px;
+  margin-top: 0;
+  color: #333;
+  margin-bottom: 15px;
 }
 
 .medical-history-table {
-    width: 100%;
-    border-collapse: collapse;
-    overflow-x: auto;
-    display: block;
+  width: 100%;
+  border-collapse: collapse;
+  overflow-x: auto;
+  display: block;
 }
 
 .medical-history-table th,
 .medical-history-table td {
-    border: 1px solid #eee;
-    padding: 10px 15px;
-    text-align: left;
-    white-space: nowrap;
+  border: 1px solid #eee;
+  padding: 10px 15px;
+  text-align: left;
+  white-space: nowrap;
 }
 
 .medical-history-table th {
-    background-color: #f8f8f8;
-    font-weight: bold;
-    color: #555;
+  background-color: #f8f8f8;
+  font-weight: bold;
+  color: #555;
 }
 
 .medical-history-table tbody tr:nth-child(even) {
-    background-color: #fdfdfd;
+  background-color: #fdfdfd;
 }
 
 .medical-history-table td {
-    color: #444;
+  color: #444;
 }
