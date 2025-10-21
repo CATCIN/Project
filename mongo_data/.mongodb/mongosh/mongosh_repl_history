@@ -1,4 +1,58 @@
 exit
+db.medi_schedule.deleteMany({});
+use catcin_db;
+show collections;
+db.medi_schedule.deleteMany({});
+exit
+db.medicine.find({}, { name: 1, category: 1 });
+show medicine
+show collections;
+db.medicines.find({}, { name: 1, category: 1 });
+db.medicine.updateMany({ category: "비타민" }, { $set: { category: "vitamin" } });
+db.medicine.updateMany({ category: "항생제" }, { $set: { category: "antibiotic" } });
+db.Medicine.updateMany({ category: "항생제" }, { $set: { category: "antibiotic" } });
+db.medicine.updateMany({ category: "영양제" }, { $set: { category: "nutritional" } });
+// 'Medicine' 대신 'medicines' (또는 1번에서 확인한 이름) 사용
+show collections;
+db.Medicine.find
+db.Medicine.find({})
+db.Medicine.find({}, { name: 1, category: 1 });
+catcin_db> db.Medicine.find({}, { name: 1, category: 1 });
+db.Medicine.find({}, { name: 1, category: 1 });
+db.Medicine.updateMany({ category: "비타민" }, { $set: { category: "vitamin" } });
+db.Medicine.updateMany({ category: "항생제" }, { $set: { category: "antibiotic" } });
+db.Medicine.updateMany({ category: "영양제" }, { $set: { category: "nutritional" } });
+use catcin_db;
+exit
+db.Medicine.find()
+db.Medicine.find({}, { name: 1, category: 1 });
+);
+  { $set: { category: "anthelmintic" } }
+  { category: "구충제" },
+db.Medicine.updateMany(
+// 5. "구충제" -> "anthelmintic"
+);
+  { $set: { category: "nutritional" } }
+  { category: "영양제" },
+db.Medicine.updateMany(
+// 4. "영양제" -> "nutritional"
+);
+  { $set: { category: "vitamin" } }
+  { category: "비타민" },
+db.Medicine.updateMany(
+// 3. "비타민" -> "vitamin"
+);
+  { $set: { category: "painkiller" } }
+  { category: "진통제" },
+db.Medicine.updateMany(
+// 2. "진통제" -> "painkiller"
+);
+  { $set: { category: "antibiotic" } }
+  { category: "항생제" },
+db.Medicine.updateMany(
+// 1. "항생제" -> "antibiotic"
+use catcin_db;
+exit
 )
    { upsert: true }
    { $set: { sequence_value: 11 } },

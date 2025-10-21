@@ -6,11 +6,11 @@ from bson import ObjectId
 from enum import Enum
 
 class Category(str, Enum):
-    ANTIBIOTIC = "항생제"
-    PAINKILLER = "진통제"
-    VITAMIN = "비타민"
-    nutritional = "영양제"
-    anthelmintic = "구충제"
+    ANTIBIOTIC = "antibiotic"
+    PAINKILLER = "painkiller"
+    VITAMIN = "vitamin"
+    NUTRITIONAL = "nutritional"
+    ANTHELMINTIC = "anthelmintic"
 
 class Cat(Model):
     cat_code: Optional[str] = None  # 사람이 보기 쉬운 고양이 코드 (예: CAT_001)

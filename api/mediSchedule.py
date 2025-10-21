@@ -86,30 +86,37 @@ async def get_schedule_stats_by_category():
         {
             "$lookup": {
                 "from": "Medicine",
-                "localField": "medicine",
+                "localField": "medicine",  # "medicine" (odmantic 참조 필드명)
                 "foreignField": "_id",
                 "as": "medicine_details"
             }
         },
-        {"$unwind": "$medicine_details"},
+        {
+            "$unwind": {
+                "path": "$medicine_details",
+                "preserveNullAndEmptyArrays": True  # 참조가 깨져도 스케줄 유지
+            }
+        },
         {
             "$group": {
-                "_id": "$medicine_details.category",
+                "_id": "$medicine_details.category",  # 약이 없으면 null로 그룹화됨
                 "count": {"$sum": 1}
             }
         },
         {
             "$project": {
                 "_id": 0,
-                "label": "$_id",
+                "label": {"$ifNull": ["$_id", "기타/삭제됨"]}, # null 레이블 처리
                 "value": "$count"
             }
         }
     ]
 
+    # 여기부터 들여쓰기를 확인하세요 (함수 레벨)
     schedule_collection = engine.get_collection(MediSchedule)
     stats_cursor = schedule_collection.aggregate(pipeline)
     
+    # 이 라인의 들여쓰기를 수정했습니다.
     stats = await stats_cursor.to_list(length=None)
     return stats
 
