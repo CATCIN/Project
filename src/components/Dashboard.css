@@ -9,7 +9,6 @@
   display: flex;
   gap: 20px; 
   flex-wrap: nowrap; 
-  /* overflow-x: auto; /* 내용이 넘칠 경우 수평 스크롤바 생성 */
 }
 
 .dashboard-bottom {
@@ -17,29 +16,33 @@
   gap: 20px; 
   margin-top: 24px;
   flex-wrap: nowrap; 
-  /* overflow-x: auto; /* 내용이 넘칠 경우 수평 스크롤바 생성 */
 }
 
+/* * [수정된 부분]
+ * 고정 width/min-width 대신 flex-grow 비율을 사용합니다.
+ * 목표 이미지(image_4a0189.jpg)의 비율(상단 2:1, 하단 1:2)을 적용합니다.
+ */
+
 .recent-cats-wrapper {
-  /*flex: 1;*/ /* 남은 공간을 채우는 flex 설정 제거 */
-  min-width: 400px; /* 고양이 이미지 섹션의 최소 너비 설정 (원하는 값으로 조정) */
-  flex-shrink: 0; /* 요소가 줄어들지 않도록 고정 */
+  /* 상단 좌측: 2의 비율 */
+  flex: 2 1 0%;
+  min-width: 0; /* 그래프/이미지 오버플로우 방지 */
 }
 
 .medicine-widget-wrapper {
-  width: 340px; /* 고정 너비 */
-  min-width: 300px;
-  flex-shrink: 0; /* 요소가 줄어들지 않도록 고정 */
+  /* 상단 우측: 1의 비율 */
+  flex: 1 1 0%;
+  min-width: 0; 
 }
 
 .today-cats-wrapper {
-  /*flex: 1;*/ /* 남은 공간을 채우는 flex 설정 제거 */
-  min-width: 250px; /* 오늘 투약 리스트의 최소 너비 설정 */
-  flex-shrink: 0; /* 요소가 줄어들지 않도록 고정 */
+  /* 하단 좌측: 1의 비율 (목표 이미지를 보면 하단 막대 그래프보다 작음) */
+  flex: 1 1 0%;
+  min-width: 0;
 }
 
 .recent-dosage-wrapper {
-  /*flex: 1;*/ /* 남은 공간을 채우는 flex 설정 제거 */
-  min-width: 400px; /* 최근 투약량 그래프의 최소 너비 설정 */
-  flex-shrink: 0; /* 요소가 줄어들지 않도록 고정 */
+  /* 하단 우측: 2의 비율 (목표 이미지를 보면 하단 고양이 리스트보다 큼) */
+  flex: 2 1 0%;
+  min-width: 0;
 }

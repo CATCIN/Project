@@ -11,7 +11,7 @@ function RecentCatsSection() {
   useEffect(() => {
     const fetchCats = async () => {
       try {
-        const response = await fetch('http://localhost:8000/catcin/cats/recent');
+        const response = await fetch('/catcin/cats/recent');
         
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

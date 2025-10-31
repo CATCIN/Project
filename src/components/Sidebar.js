@@ -24,7 +24,7 @@ function Sidebar() {
           to="/"
           className="logo-link"
         >
-          🐱 CatCin
+          🐱 CatCine
         </NavLink>
       </div>
       <nav>

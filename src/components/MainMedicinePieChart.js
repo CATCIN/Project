@@ -24,7 +24,7 @@ function MainMedicinePieChart() {
     const fetchChartData = async () => {
       try {
         setNoData(false); // 초기화
-        const response = await fetch('http://localhost:8000/catcin/schedules/stats/category');
+        const response = await fetch('/catcin/schedules/stats/category');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
