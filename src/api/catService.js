@@ -1,6 +1,13 @@
 const API_BASE = (process.env.REACT_APP_API_BASE || "").replace(/\/+$/, "");
-
 const API_URL = `${API_BASE}/catcin/cats`;
+
+export async function fetchCatsDueToday(limit = 3) {
+  const res = await fetch(`${API_URL}/due-today?limit=${limit}`);
+  if (!res.ok) {
+    throw new Error(`Failed to fetch cats due today: ${res.status}`);
+  }
+  return await res.json();
+}
 
 export async function fetchCatList() {
   const res = await fetch(API_URL);
@@ -21,13 +28,11 @@ export async function fetchCatDetail(catId) {
 }
 
 export async function registerCatManual(formData) {
-  const url = `${API_BASE}/catcin/register-manual`; 
-  
+  const url = `${API_BASE}/catcin/register-manual`;
   const res = await fetch(url, {
     method: 'POST',
     body: formData,
   });
-
   if (!res.ok) {
     const text = await res.text();
     throw new Error(`Failed to register cat manually: ${res.status} ${text}`);
@@ -40,13 +45,11 @@ export async function createCat(formData) {
     method: 'POST',
     body: formData,
   });
-
   if (!res.ok) {
     const text = await res.text();
     throw new Error(`Failed to create medicine: ${res.status} ${text}`);
   }
   return await res.json();
-
 }
 
 export async function deleteCat(catId) {

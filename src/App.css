@@ -1,12 +1,9 @@
-/* App.css */
-
 .App {
   display: flex;
-  height: 100vh; /* 화면 전체 높이 차지 */
+  height: 100vh; 
   overflow: hidden;
 }
 
-/* ===== Sidebar 스타일 ===== */
 .sidebar {
   width: 240px;
   background-color: #ffffff;
@@ -22,7 +19,7 @@
   padding: 0 20px;
   font-size: 1.4rem;
   font-weight: bold;
-  color: #27ae60; /* 예시: 녹색 로고 색 */
+  color: #27ae60; 
 }
 
 .sidebar nav {
@@ -46,7 +43,6 @@
   font-weight: bold;
 }
 
-/* “Others” 구분선 */
 .sidebar .divider {
   margin: 20px 0 8px 20px;
   font-size: 0.8rem;
@@ -54,7 +50,6 @@
   text-transform: uppercase;
 }
 
-/* ===== Header 스타일 ===== */
 .header {
   height: 60px;
   background-color: #ffffff;
@@ -65,7 +60,6 @@
   padding: 0 30px;
 }
 
-/* 검색창 */
 .header .search-container {
   flex: 1;
   display: flex;
@@ -79,14 +73,12 @@
   border-radius: 4px;
 }
 
-/* 우측 프로필 버튼 */
 .header .profile-btn {
   position: relative;
   font-size: 1rem;
   color: #555;
 }
 
-/* ===== 메인 콘텐츠 */
 .main-content {
   flex-grow: 1;
   display: flex;
@@ -95,16 +87,15 @@
 
 .main-content .dashboard-container {
   padding: 20px 30px;
-  overflow-y: auto; /* 스크롤 가능 */
+  overflow-y: auto;
 }
 
-/* Dashboard 타이틀 */
+
 .dashboard-container h1 {
   font-size: 1.8rem;
   margin-bottom: 20px;
 }
 
-/* ===== “최근 인식된 고양이” 섹션 ===== */
 .recent-cats {
   margin-bottom: 30px;
 }
@@ -114,14 +105,13 @@
   margin-bottom: 10px;
 }
 
-/* CatCard를 3개씩 그리드로 배치 */
 .cat-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
 
-/* 각 카드 */
+
 .cat-card {
   width: 100%;
   height: 120px;
@@ -139,19 +129,19 @@
   object-fit: cover;
 }
 
-/* ===== 상단 오른쪽 원형 차트 위젯 ===== */
 .medicine-widget {
   background-color: #ffffff;
   border-radius: 8px;
   padding: 16px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
   width: 100%;
-  max-width: 360px;
+  
+  max-width: 420px; 
+  
   display: flex;
   flex-direction: column;
 }
 
-/* 차트 위젯 제목 행 */
 .medicine-widget .widget-header {
   display: flex;
   justify-content: space-between;
@@ -198,12 +188,10 @@
   border-radius: 2px;
 }
 
-/* 파란색, 연두색, 보라색 예시로 설정 */
 .legend-color-box.pancaur { background-color: #3498db; }
 .legend-color-box.paracap { background-color: #2ecc71; }
 .legend-color-box.piline  { background-color: #9b59b6; }
 
-/* ===== 하단 좌측 “오늘 투약 대상인 고양이” ===== */
 .today-cats-card {
   background-color: #ffffff;
   border-radius: 8px;
@@ -254,7 +242,7 @@
   color: #888;
 }
 
-/* ===== 하단 우측 “최근 투약량” ===== */
+
 .recent-dosage-card {
   background-color: #ffffff;
   border-radius: 8px;
@@ -284,9 +272,8 @@
   flex: 1;
 }
 
-/* View Report 버튼(하단) */
 .view-report-btn {
-  margin-top: auto; /* 공간을 밀어내서 가장 아래에 위치 */
+  margin-top: auto; 
   align-self: flex-end;
   padding: 6px 12px;
   background-color: #27ae60;

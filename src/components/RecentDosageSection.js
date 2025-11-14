@@ -1,4 +1,3 @@
-// src/components/RecentDosageSection.js
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import {
@@ -9,36 +8,44 @@ import {
   Tooltip,
   Legend
 } from 'chart.js';
+import './RecentDosageSection.css';
 
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 
 function RecentDosageSection() {
-  // 예시 데이터: 지난 6일 vs 지난 주 같은 요일(또는 가로축 1~12일)
-  // 여기서는 “01, 02, 03 ... 12” 까지 총 12개 막대에,
-  // 파란색 막대 = Last 6 days, 연한 파란 점선 막대 = Last Week
   const data = {
-    labels: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
+    labels: ['11/1','11/2','11/3','11/4','11/5','11/6','11/7','11/8','11/9','11/10','11/11','11/12'],
     datasets: [
       {
-        label: 'Last 6 days',
-        data: [1200, 1500, 1000, 1800, 1300, 1600, 1400, 1700, 1500, 1900, 2000, 1800],
-        backgroundColor: 'rgba(52, 152, 219, 0.8)',
-        borderRadius: 4
+        label: 'This month (count)',
+        data: [1, 2, 0, 1, 1, 2, 1, 0, 1, 2, 1, 1],
+        backgroundColor: 'rgba(39, 174, 96, 0.9)',
+        borderRadius: 4,
+        borderSkipped: false
       },
       {
-        label: 'Last Week',
-        data: [1000, 1400, 900, 1600, 1200, 1500, 1300, 1600, 1400, 1800, 1900, 1700],
-        backgroundColor: 'rgba(52, 152, 219, 0.3)', // 연한 색
-        borderRadius: 4
+        label: 'Last month (count)',
+        data: [0, 1, 1, 1, 0, 1, 2, 1, 1, 1, 2, 1],
+        backgroundColor: 'rgba(39, 174, 96, 0.25)',
+        borderRadius: 4,
+        borderSkipped: false
       }
     ]
   };
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
-        display: false // 범례 숨기기 (오른쪽에 “Last 6 days vs Last Week” 텍스트만 있으면 충분)
+        display: true,
+        position: 'top',
+        labels: {
+          font: { size: 12 },
+          padding: 12,
+          color: '#333'
+        }
       },
       tooltip: {
         callbacks: {
@@ -52,6 +59,9 @@ function RecentDosageSection() {
       x: {
         grid: {
           display: false
+        },
+        ticks: {
+          font: { size: 11 }
         }
       },
       y: {
@@ -60,7 +70,8 @@ function RecentDosageSection() {
           color: 'rgba(200,200,200,0.2)'
         },
         ticks: {
-          beginAtZero: true
+          beginAtZero: true,
+          font: { size: 11 }
         }
       }
     }
@@ -68,23 +79,17 @@ function RecentDosageSection() {
 
   return (
     <div className="recent-dosage-card">
-      <h3>최근 투약량</h3>
-
-      {/* 간단 텍스트 정보 */}
-      <div className="stats">
-        <span></span>
-        <span className="highlight"> ↑ 2.1% vs last week</span>
-        <br />
-        <span>Administered from May 1 to 12, 2025</span>
+      <div className="recent-dosage-right">
+        <div className="chart-header">
+          <h3>최근 투약량</h3>
+          <div className="stats">
+            <span className="highlight">↑ 2.1% vs last week</span>
+          </div>
+        </div>
+        <div className="chart-area">
+          <Bar data={data} options={options} />
+        </div>
       </div>
-
-      {/* 막대 차트 */}
-      <div className="chart-area">
-        <Bar data={data} options={options} />
-      </div>
-
-      {/* View Report 버튼 */}
-      <button className="view-report-btn">View Report</button>
     </div>
   );
 }

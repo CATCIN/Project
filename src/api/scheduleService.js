@@ -1,5 +1,3 @@
-// src/api/scheduleService.js
-
 const API_BASE = (process.env.REACT_APP_API_BASE || "").replace(/\/+$/, "");
 
 const API_URL = `${API_BASE}/catcin/mediSchedules`;

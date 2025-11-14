@@ -63,6 +63,8 @@ function MainMedicinePieChart() {
   }, []);
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       tooltip: {
         callbacks: {
@@ -86,16 +88,16 @@ function MainMedicinePieChart() {
     <div className="medicine-widget">
       <div className="widget-header">
         <h3>주요 투약 약물 카테고리</h3>
-        <button>View Report</button>
       </div>
       <div className="chart-area">
         <div style={{ 
-            width: '240px', 
-            height: '240px', 
+            width: '200px', 
+            height: '200px', 
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'center', 
-            color: '#888' 
+            color: '#888',
+            position: 'relative'
           }}>
           {chartData.datasets.length > 0 ? (
             <Pie data={chartData} options={options} />

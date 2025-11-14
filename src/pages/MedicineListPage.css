@@ -1,5 +1,3 @@
-/* src/pages/MedicineListPage.css */
-
 .medicine-list-page {
   padding: 20px;
 }
@@ -27,21 +25,25 @@
 .medicine-cards-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-auto-rows: 300px;
   gap: 20px;
 }
 
 .medicine-card {
   background-color: #ffffff;
   border-radius: 8px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  box-sizing: border-box;
+  height: 100%;
 }
 
 .medicine-image-wrapper {
   width: 100%;
-  height: 160px;
+  height: 150px; 
   background-color: #f0f0f0;
   display: flex;
   align-items: center;
@@ -66,11 +68,25 @@
   flex-direction: column;
 }
 
-.medicine-name {
-  margin: 0;
-  font-size: 1.2rem;
-  color: #222;
-  margin-bottom: 4px;
+.medicine-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: auto; 
+}
+
+.medicine-info {
+  padding: 8px 12px;
+  overflow: visible;
+  flex: 1;
+}
+
+.medicine-note {
+  white-space: normal;
+  overflow-wrap: break-word; 
+  line-height: 1.4;
+  margin-top: 4px;
+  color: #555;
 }
 
 .medicine-category,
@@ -83,13 +99,18 @@
 }
 
 .medicine-card {
-  position: relative; /* delete-button을 카드 상단 우측에 배치하기 위해 */
+  position: relative; 
+}
+
+.medicine-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.12);
 }
 
 .medicine-card-delete-button {
   position: absolute;
-  top: 8px;     /* 카드 내부 여백에 맞춰 위치 조정 */
-  right: 8px;   /* 카드 모서리에서 약간 안쪽으로 */
+  top: 8px;   
+  right: 8px;  
   width: 24px;
   height: 24px;
   border: none;

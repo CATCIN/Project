@@ -1,10 +1,9 @@
-// src/components/Dashboard.js
 import React from 'react';
 import RecentCatsSection from './RecentCatsSection';
 import MainMedicinePieChart from './MainMedicinePieChart';
 import TodayCatsList from './TodayCatsList';
 import RecentDosageSection from './RecentDosageSection';
-import './Dashboard.css'; // 레이아웃 관련 혹은 섹션 간 마진/그리드 정의
+import './Dashboard.css'; 
 
 function Dashboard({ recentCats }) {
   return (

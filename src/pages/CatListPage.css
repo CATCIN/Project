@@ -24,8 +24,12 @@
 
 .cat-cards-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  /* Force exactly 5 columns and 2 rows (10 cards per page) at fixed sizes */
+  grid-template-columns: repeat(5, 240px);
+  grid-auto-rows: 300px; /* match .cat-card height */
   gap: 20px;
+  width: calc(5 * 240px + 4 * 20px); /* fixed total width for 5 columns + gaps */
+  margin: 0 auto; /* center the fixed-width grid */
 }
 
 .cat-card {
@@ -38,6 +42,7 @@
   justify-content: flex-start;  /* 내용 위쪽부터 */
   position: relative;
   height: 300px; /* 카드 높이 고정 */
+  flex: 0 0 auto; /* prevent flex children from stretching card height */
 }
 
 
@@ -86,7 +91,7 @@
 .detail-button {
   margin-top: auto;
   padding: 8px 12px;
-  background-color: #1e50ad;
+  background-color: #27ae60;
   color: #fff;
   border-radius: 4px;
   border: none;
@@ -96,7 +101,7 @@
 }
 
 .detail-button:hover {
-  background-color: #163b8b;
+  background-color: #229954;
 }
 
 .cat-card-delete-button {

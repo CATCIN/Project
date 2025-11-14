@@ -1,3 +1,5 @@
+import React from 'react';
+
 function TodayCatItem({ name, lastDate, thumbnail }) {
   return (
     <div className="today-cat-item">

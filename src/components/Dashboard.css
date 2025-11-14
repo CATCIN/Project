@@ -1,48 +1,229 @@
-/* Dashboard.css */
-
 .dashboard {
   display: flex;
   flex-direction: column;
+  padding: 20px;
+  max-width: 1280px; 
+  margin: 0 auto;
 }
 
 .dashboard-top {
   display: flex;
-  gap: 20px; 
-  flex-wrap: nowrap; 
+  gap: 20px;
+  flex-wrap: nowrap;
+  align-items: stretch; 
+  margin-bottom: 20px;
+  height: 440px; 
+}
+
+
+.dashboard-top > * {
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden; 
+}
+
+.recent-cats-wrapper { width: 880px; flex: 0 0 880px; overflow: visible; }
+.medicine-widget-wrapper { width: 360px; flex: 0 0 360px; }
+
+.dashboard-top > * {
+  min-height: 260px; 
+  box-sizing: border-box;
+  overflow: hidden; 
 }
 
 .dashboard-bottom {
   display: flex;
-  gap: 20px; 
-  margin-top: 24px;
-  flex-wrap: nowrap; 
+  gap: 20px;
+  flex-wrap: nowrap;
+  align-items: stretch; 
 }
 
-/* * [수정된 부분]
- * 고정 width/min-width 대신 flex-grow 비율을 사용합니다.
- * 목표 이미지(image_4a0189.jpg)의 비율(상단 2:1, 하단 1:2)을 적용합니다.
- */
-
-.recent-cats-wrapper {
-  /* 상단 좌측: 2의 비율 */
-  flex: 2 1 0%;
-  min-width: 0; /* 그래프/이미지 오버플로우 방지 */
+.dashboard-bottom {
+  display: flex;
+  gap: 20px;
+  flex-wrap: nowrap;
+  align-items: stretch; 
+  height: 320px; 
 }
+
+.dashboard-bottom > * {
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden;
+}
+
+.today-cats-wrapper { width: 360px; flex: 0 0 360px; }
+.recent-dosage-wrapper { width: 880px; flex: 0 0 880px; }
 
 .medicine-widget-wrapper {
-  /* 상단 우측: 1의 비율 */
-  flex: 1 1 0%;
-  min-width: 0; 
+  flex: 1.3 1 0%; 
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .today-cats-wrapper {
-  /* 하단 좌측: 1의 비율 (목표 이미지를 보면 하단 막대 그래프보다 작음) */
   flex: 1 1 0%;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .recent-dosage-wrapper {
-  /* 하단 우측: 2의 비율 (목표 이미지를 보면 하단 고양이 리스트보다 큼) */
   flex: 2 1 0%;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.recent-cats {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+}
+
+.recent-cats h2 {
+  margin: 0 0 16px 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  grid-auto-rows: 160px;
+  gap: 12px;
+  flex: 1 1 auto;
+  min-height: 0; 
+  align-content: start; 
+}
+
+.cat-grid > a, .cat-grid > a > .cat-card {
+  height: 100%;
+  box-sizing: border-box;
+  overflow: hidden; 
+}
+
+.cat-grid a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.cat-grid > a { display: block; width: 100%; height: 100%; }
+
+.medicine-widget {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.widget-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.widget-header button {
+  padding: 6px 12px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.widget-header button:hover {
+  background: #0056b3;
+}
+
+.chart-area {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  height: calc(100% - 48px); 
+}
+
+.widget-header h3,
+.widget-header button,
+.legend-item span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.legend-color-box {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.today-cats-section {
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.today-cats-section h2 {
+  margin: 0 0 16px 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.today-cats-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+.today-cat-item {
+  background: #f8f9fb;
+  padding: 12px;
+  border-radius: 6px;
+  border-left: 3px solid #27ae60;
+  font-size: 0.9rem;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

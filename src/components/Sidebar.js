@@ -18,7 +18,6 @@ function Sidebar() {
   
   return (
     <div className="sidebar">
-      {/* 로고 영역 */}
       <div className="logo">
         <NavLink
           to="/"
@@ -41,7 +40,6 @@ function Sidebar() {
           </NavLink>
         ))}
 
-        {/* 구분선 */}
         <div className="divider">OTHERS</div>
 
         {otherItems.map((item) => (

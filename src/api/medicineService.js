@@ -1,4 +1,3 @@
-// src/api/medicineService.js
 const API_BASE = (process.env.REACT_APP_API_BASE || "").replace(/\/+$/, "");
 
 const API_URL = `${API_BASE}/catcin/medicines`;
@@ -34,7 +33,7 @@ export async function deleteMedicine(medicineId) {
     const text = await res.text();
     throw new Error(`Failed to delete medicine: ${res.status} ${text}`);
   }
-  // 삭제 성공 시 보통 204 No Content 혹은 200 OK를 반환하므로,
-  // 특별히 데이터를 리턴할 필요가 없다면 그냥 return;
+  
+  
   return;
 }
