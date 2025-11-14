@@ -1,0 +1,318 @@
+.cat-detail-page {
+  padding: 20px;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+.header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.back-button, .add-schedule-button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.back-button {
+  background: #6c757d;
+  color: white;
+}
+
+.back-button:hover {
+  background: #5a6268;
+}
+
+.add-schedule-button {
+  background: #007bff;
+  color: white;
+}
+
+.add-schedule-button:hover {
+  background: #0056b3;
+}
+
+.cat-top-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 24px;
+  margin-bottom: 20px;
+  align-items: stretch;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.cat-photo-card {
+  background: #fff;
+  padding: 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: block;
+  width: 380px;      
+  min-width: 380px;
+  max-width: 380px;
+  height: 420px;     
+  overflow: hidden;
+}
+
+.cat-detail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* 메타 카드 */
+.cat-meta-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.cat-title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.source-tag {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.source-system { 
+  background: #007bff; 
+}
+
+.source-user { 
+  background: #28a745; 
+}
+
+.meta-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.meta-rows p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.meta-rows strong {
+  color: #111;
+  font-weight: 700;
+}
+
+.cat-bottom {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+  margin: 0 0 16px 0;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.cat-meta-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  margin-bottom: 16px;
+}
+
+.cat-meta-card .card-header h2 {
+  margin: 0;
+  font-size: 1.3rem; 
+  font-weight: 700;
+  color: #222;
+}
+
+
+.cat-meta-card .schedule-table-wrapper {
+  flex: 1 1 auto; 
+  overflow-y: auto; 
+  overflow-x: hidden;
+}
+
+.small-btn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.small-btn:hover {
+  background: #0056b3;
+}
+
+/* 표 스타일 */
+.schedule-table-wrapper {
+  width: 100%;
+  overflow-x: hidden; 
+}
+
+.schedule-table,
+.medical-history-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  table-layout: fixed; 
+  white-space: nowrap;
+  min-width: 100%;
+}
+
+.schedule-table-wrapper table { display: block; width:100%; }
+.schedule-table thead th,
+.medical-history-table thead th {
+  background: #f0f4f9; 
+  color: #007bff;
+  font-weight: 700;
+  padding: 12px 10px;
+  text-align: center;
+  border-bottom: 2px solid #007bff;
+}
+
+.schedule-table tbody tr,
+.medical-history-table tbody tr {
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  border-radius: 6px;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+
+.schedule-table td,
+.medical-history-table td {
+  padding: 14px 12px;
+  border: none;
+  font-size: 0.95rem;
+  vertical-align: middle;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.schedule-table td:first-child, .medical-history-table td:first-child {
+  text-align: left;
+}
+.schedule-table td:not(:first-child), .medical-history-table td:not(:first-child) {
+  text-align: center;
+}
+
+.schedule-table tbody tr:hover, .medical-history-table tbody tr:hover {
+  transform: translateY(-2px);
+  background: #f0f7ff;
+  box-shadow: 0 4px 12px rgba(0,123,255,0.15);
+}
+
+.schedule-table tbody tr:hover,
+.medical-history-table tbody tr:hover {
+  background: #f0f7ff;
+}
+
+.schedule-table tbody tr:nth-child(even),
+.medical-history-table tbody tr:nth-child(even) {
+  background: #fafbfc;
+}
+
+.card canvas {
+  max-height: 240px !important;
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+.card > div {
+  width: 100%;
+  display: block;
+}
+
+.medical-history-card .table-wrapper {
+  overflow-x: hidden; 
+}
+.card > div:not(.schedule-table-wrapper) {
+  max-height: none;
+  overflow: visible;
+}
+
+
+/* 반응형 */
+@media (max-width: 860px) {
+  .cat-top-grid {
+    grid-template-columns: 1fr;
+  }
+  .cat-photo-card {
+    position: static;
+  }
+
+  .cat-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .header-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .back-button,
+  .add-schedule-button {
+    width: 100%;
+  }
+  
+  .schedule-table,
+  .medical-history-table {
+    min-width: 600px;
+  }
+}

@@ -1,0 +1,85 @@
+.schedule-table-component {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.schedule-table-component.empty {
+  padding: 24px;
+  text-align: center;
+  color: #666;
+  font-weight: 600;
+}
+
+.table-headers {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
+  gap: 8px;
+  align-items: center;
+  padding: 8px 4px;
+  background: #f0f4f9;
+  border-bottom: 2px solid #229954;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.header-cell {
+  cursor: pointer;
+  user-select: none;
+  color: #229954;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.header-cell.name-cell { justify-content: center; }
+.header-cell .sort-indicator { font-size: 0.8rem; color: #666; }
+
+.table-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.schedule-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 2fr;
+  gap: 8px;
+  align-items: center;
+  padding: 12px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+  width: 100%;
+}
+
+.schedule-row:hover { 
+  transform: translateY(-4px); 
+  box-shadow: 0 6px 16px rgba(0,123,255,0.12); 
+  background: #f0f7ff;
+}
+
+.cell { 
+  padding: 6px 8px; 
+  color: #333; 
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center; /* center all schedule table cells */
+}
+.cell.center { text-align: center; }
+.name-cell { font-weight: 700; color: #222; }
+
+/* smaller screens: reduce spacing but keep grid (no stacking) so elements are clipped instead of reflowing */
+@media (max-width: 640px) {
+  .table-headers { padding: 6px 2px; gap: 6px; }
+  .schedule-row { gap: 6px; padding: 10px; }
+}

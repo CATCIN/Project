@@ -1,0 +1,44 @@
+# 환경 변수 및 설정 파일
+.env
+*.env
+*.env.*
+
+# 파이썬 캐시/빌드 파일
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+
+# IDE/에디터 관련 파일
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS별 임시 파일
+.DS_Store
+Thumbs.db
+
+# 로그 파일
+*.log
+
+# 테스트/커버리지 결과
+htmlcov/
+.coverage
+coverage.xml
+*.cover
+
+# 패키지/의존성 파일
+*.egg-info/
+dist/
+build/
+
+# frontend 관련
+frontend/
+frontend/build/
+
+# 기타 필요없는 파일/폴더
+node_modules/
+npm-debug.log*

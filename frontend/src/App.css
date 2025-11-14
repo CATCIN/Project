@@ -1,0 +1,283 @@
+.App {
+  display: flex;
+  height: 100vh; 
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 240px;
+  background-color: #ffffff;
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar .logo {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #27ae60; 
+}
+
+.sidebar nav {
+  margin-top: 20px;
+  flex-grow: 1;
+}
+
+.sidebar nav .menu-item {
+  padding: 15px 20px;
+  font-size: 1rem;
+  color: #555;
+}
+
+.sidebar nav .menu-item:hover {
+  background-color: #f0f0f0;
+}
+
+.sidebar nav .menu-item.active {
+  background-color: #eafaf1;
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.sidebar .divider {
+  margin: 20px 0 8px 20px;
+  font-size: 0.8rem;
+  color: #888;
+  text-transform: uppercase;
+}
+
+.header {
+  height: 60px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+}
+
+.header .search-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.header .search-container input {
+  width: 60%;
+  max-width: 500px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.header .profile-btn {
+  position: relative;
+  font-size: 1rem;
+  color: #555;
+}
+
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content .dashboard-container {
+  padding: 20px 30px;
+  overflow-y: auto;
+}
+
+
+.dashboard-container h1 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.recent-cats {
+  margin-bottom: 30px;
+}
+
+.recent-cats h2 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+
+.cat-card {
+  width: 100%;
+  height: 120px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cat-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.medicine-widget {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  width: 100%;
+  
+  max-width: 420px; 
+  
+  display: flex;
+  flex-direction: column;
+}
+
+.medicine-widget .widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.medicine-widget .widget-header h3 {
+  font-size: 1rem;
+  color: #333;
+}
+
+.medicine-widget .widget-header button {
+  font-size: 0.9rem;
+  color: #27ae60;
+  background-color: #eafaf1;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+
+/* 차트 + 범례 */
+.medicine-widget .chart-area {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.medicine-widget .legend {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+}
+
+.medicine-widget .legend-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.medicine-widget .legend-color-box {
+  width: 12px;
+  height: 12px;
+  margin-right: 6px;
+  border-radius: 2px;
+}
+
+.legend-color-box.pancaur { background-color: #3498db; }
+.legend-color-box.paracap { background-color: #2ecc71; }
+.legend-color-box.piline  { background-color: #9b59b6; }
+
+.today-cats-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  flex: 1;
+  margin-right: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.today-cats-card h3 {
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.today-cats-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.today-cat-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.today-cat-item img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.today-cat-item .info {
+  display: flex;
+  flex-direction: column;
+}
+
+.today-cat-item .info .name {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.today-cat-item .info .last-date {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+
+.recent-dosage-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.recent-dosage-card h3 {
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.recent-dosage-card .stats {
+  font-size: 0.9rem;
+  margin-bottom: 12px;
+}
+
+.recent-dosage-card .stats .highlight {
+  font-weight: bold;
+  color: #27ae60;
+}
+
+.recent-dosage-card .chart-area {
+  flex: 1;
+}
+
+.view-report-btn {
+  margin-top: auto; 
+  align-self: flex-end;
+  padding: 6px 12px;
+  background-color: #27ae60;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}

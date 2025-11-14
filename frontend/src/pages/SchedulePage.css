@@ -1,0 +1,132 @@
+.schedule-list-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+.schedule-list-page h1 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+  color: #333;
+}
+.schedule-list-page p {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 12px;
+}
+.add-schedule-button {
+  margin-bottom: 16px;
+  padding: 8px 16px;
+  background-color: #1e50ad;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.add-schedule-button:hover {
+  background-color: #163b8b;
+}
+
+.schedule-list-container {
+  margin-top: 20px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.schedule-card {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #eef3f2;
+  padding: 12px 16px;
+  background: #fff;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  position: relative; 
+}
+.schedule-list-container > .schedule-card:last-child {
+  border-bottom: none;
+}
+.schedule-list-container > .schedule-card:not(.schedule-header):hover {
+  background-color: #fafafa;
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(39,174,96,0.06);
+}
+.schedule-header {
+  background: linear-gradient(90deg, rgba(39,174,96,0.06), rgba(52,152,219,0.04));
+  color: #0e3740;
+  font-weight: 700;
+  border-bottom: 2px solid rgba(39,174,96,0.12);
+  padding: 14px 16px;
+}
+
+
+.schedule-card:not(.schedule-header)::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10px;
+  bottom: 10px;
+  width: 6px;
+  border-radius: 4px;
+  background: linear-gradient(180deg, rgba(52,152,219,0.95), rgba(39,174,96,0.95));
+  opacity: 0.9;
+}
+
+.schedule-card .schedule-item:first-child {
+  padding-left: 18px;
+}
+
+.schedule-item {
+  padding: 12px;
+  color: #555;
+  font-size: 0.95rem;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.schedule-header .schedule-item {
+  color: #333;
+  text-align: center;
+}
+.schedule-item.date { flex: 2; text-align: left; }
+.schedule-item.medicine-name { flex: 3; text-align: left; }
+.schedule-item.target { flex: 2; }
+.schedule-item.interval { flex: 1.5; }
+.schedule-item.dose { flex: 1.5; }
+
+.schedule-item.action {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.delete-button {
+  position: static;
+  background-color: transparent;
+  border: none;
+  color: #c0392b;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.1s ease-in-out;
+  padding: 0;
+  line-height: 1;
+}
+
+.delete-button:hover {
+  color: #e74c3c;
+}
+
+
+.no-schedules {
+  padding: 40px;
+  text-align: center;
+  font-style: italic;
+  color: #888;
+}
