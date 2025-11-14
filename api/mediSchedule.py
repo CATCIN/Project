@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Form
 from odmantic import ObjectId
 from typing import List, Optional
-from models.model import MediSchedule, Medicine, MediLog, Cat
+from models.model import MediSchedule, Medicine, MediLog, Cat, Category
 from core.database import engine
 from datetime import datetime, timedelta
 
@@ -77,48 +77,27 @@ async def create_schedule_single(
     await engine.save(schedule)
     return schedule
 
-@router.get("/schedules/stats/category", summary="약물 카테고리별 스케줄 통계 조회")
+@router.get("/schedules/stats/category", summary="약물 카테고리별 통계(보유 약 기준, 0 포함)")
 async def get_schedule_stats_by_category():
-    """
-    전체 스케줄을 약물 카테고리별로 그룹화하여 각 카테고리의 스케줄 개수를 반환
-    """
+    med_col = engine.get_collection(Medicine)
+
     pipeline = [
-        {
-            "$lookup": {
-                "from": "Medicine",
-                "localField": "medicine",  # "medicine" (odmantic 참조 필드명)
-                "foreignField": "_id",
-                "as": "medicine_details"
-            }
-        },
-        {
-            "$unwind": {
-                "path": "$medicine_details",
-                "preserveNullAndEmptyArrays": True  # 참조가 깨져도 스케줄 유지
-            }
-        },
-        {
-            "$group": {
-                "_id": "$medicine_details.category",  # 약이 없으면 null로 그룹화됨
-                "count": {"$sum": 1}
-            }
-        },
-        {
-            "$project": {
-                "_id": 0,
-                "label": {"$ifNull": ["$_id", "기타/삭제됨"]}, # null 레이블 처리
-                "value": "$count"
-            }
-        }
+        {"$group": {"_id": "$category", "count": {"$sum": 1}}},
+        {"$project": {"_id": 0, "label": {"$ifNull": ["$_id", "others"]}, "value": "$count"}}
     ]
 
-    # 여기부터 들여쓰기를 확인하세요 (함수 레벨)
-    schedule_collection = engine.get_collection(MediSchedule)
-    stats_cursor = schedule_collection.aggregate(pipeline)
-    
-    # 이 라인의 들여쓰기를 수정했습니다.
-    stats = await stats_cursor.to_list(length=None)
-    return stats
+    cur = med_col.aggregate(pipeline)
+    stats = await cur.to_list(length=None)
+
+    all_categories = [c.value for c in Category]  # ["antibiotic","painkiller","vitamin","nutritional","anthelmintic"]
+    by_label = {s["label"]: int(s["value"]) for s in stats}
+
+    filled = [{"label": c, "value": by_label.get(c, 0)} for c in all_categories]
+    if "others" in by_label and by_label["others"] > 0:
+        filled.append({"label": "기타/삭제됨", "value": by_label["others"]})
+
+    filled.sort(key=lambda x: x["value"], reverse=True)
+    return filled
 
 @router.delete("/mediSchedules/{schedule_id}", status_code=204)
 async def delete_schedule(schedule_id: str):

@@ -24,3 +24,4 @@ numpy==2.1.*
 scikit-learn
 requests
 python-dotenv
+tzdata>=2024.1
